@@ -1,0 +1,27 @@
+{{define "drive-dates-view"}}
+{{/* this should be wrapped in a form wherever it is used. */}}
+    {{if .Center.BloodDrives}}
+   
+<h3>Drive Dates</h3>
+    <form>
+    <div id="drive-dates">
+        <select name="Drive" id="Drive">
+    
+            {{ range $k,$v := .Center.BloodDrives}}
+            <option value="{{$k}}">{{$k}}</option>
+            {{end}}
+    </select>
+    <input type="text" hidden value="{{.Index}}" name="locations">
+    <button type="submit" formaction="/data-entry" formmethod="get"> Enter</button>
+    
+    
+    
+    </div>
+</form>
+    {{end}}
+
+
+
+
+
+{{end}}

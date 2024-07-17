@@ -1,0 +1,128 @@
+
+
+{{/* this will be the view for data in the center of the page */}}
+
+{{define "main-content"}}
+<style>
+
+.display-card:nth-child(1){
+margin-top:30px;
+}
+</style>
+    {{if .Center}}
+<div class="main-content">
+    <div class="center-info">
+        <h3>{{.Center.Name}}</h3>
+       {{/* <p> {{.Center.Addr.Street}} <br>{{.Center.Addr.CityState}},{{.Center.Addr.Zip}} </p> */}}
+        <p>Phone: {{.Center.Phone}}</p>
+    </div>  {{/* end center info div */}}
+
+
+
+  {{template "sorting-container"}}
+    <div class="drives-container">
+        {{template "display-card" .}}
+    </div>{{/* end drives-container div */}}
+      
+</div>{{/* end main-content div */}}
+
+    {{end}}
+
+<script>
+
+
+
+    //New filter function to test
+    function filterElements1() {
+        // Get the selected values from the drop-downs
+        const categoryValue = document.getElementById('categoryDropdown').value;
+        const colorValue = document.getElementById('colorDropdown').value;
+
+        // Get all elements to be filtered
+        const elements = document.getElementsByClassName('display-card');
+
+        // Loop through the elements and apply the filter
+        for (const element of elements) {
+            const categoryMatch = !categoryValue || element.dataset.category === categoryValue;
+            const colorMatch = !colorValue || element.dataset.color === colorValue;
+
+            // Show the element if it matches both criteria, otherwise hide it
+            element.style.display = categoryMatch && colorMatch ? 'block' : 'none';
+        }
+    }
+
+    function clear(){
+      const displayCards=document.getElementsByClassName('display-card');
+        for(dc of displayCards){
+        dc.style.display="flex";
+        }
+    }
+
+
+
+
+    let sortOrder='asc'
+
+    function sortByDate() {
+      const elements = document.querySelectorAll('[data-date]');
+      const elementsArray = Array.from(elements);
+      const parentContainer = document.querySelector(".drives-container")
+
+      elementsArray.sort((a, b) => {
+        const dateA = new Date(a.dataset.date).getMonth();
+        const dateB = new Date(b.dataset.date).getMonth();
+    console.log("dates",dateA,dateB)
+        if (sortOrder === 'asc') {
+          return dateA - dateB;
+        } else {
+          return dateB - dateA;
+        }
+      });
+
+
+    elementsArray.forEach((element) => {
+      parentContainer.appendChild(element);
+    });
+      toggleSortingIcon();
+    }
+
+    function toggleSortingIcon() {
+      let sortingIcon = document.getElementById('sorting-icon');
+      sortingIcon.innerHTML = sortOrder === 'asc' ? '🔼' : '🔽';
+      if(sortOrder==='asc'){
+        if(sortingIcon.classList.contains('des')){
+        sortingIcon.classList.remove('des')
+        }
+      sortingIcon.classList.add("asc")
+      }else{
+      sortingIcon.classList.remove("asc")
+      sortingIcon.classList.add("des")
+      }
+      
+      
+    }
+
+    function toggleSorting() {
+      sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+      sortByDate();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      sortByDate();
+    });
+
+
+
+
+
+
+
+
+
+</script>
+
+<script src="./js/js-time.js"></script>
+<script src="./js/timeout-checker.js"></script>
+
+
+{{end}}

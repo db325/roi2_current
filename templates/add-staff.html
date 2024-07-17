@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Round"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{.Title}}</title>
+  </head>
+  <body>
+    <div class="sub-page">
+      {{template "sub-page-nav" .}}
+      <div class="main-content">
+        <div class="staff-container">
+          <div class="staff-form">
+            <label for="add-staff">New Staff</label>
+            <form
+              id="add-staff"
+              action="./add-staff"
+              method="post"
+              class="data-entry creation-panel"
+            >
+              <input
+                type="number"
+                hidden
+                value="{{.Location}}"
+                name="locations"
+              />
+              <div class="form-input">
+                <input
+                  type="text"
+                  id="first-name"
+                  name="first-name"
+                  placeholder="First Name"
+                  aria-placeholder="first-name"
+                  required
+                />
+              </div>
+              <div class="form-input">
+                <input
+                  type="text"
+                  id="last-name"
+                  name="last-name"
+                  placeholder="Last Name"
+                  aria-placeholder="last-name"
+                  required
+                />
+              </div>
+              <div class="form-input">
+                <input
+                  type="number"
+                  step="0.01"
+                  id="hourly-wage"
+                  name="hourly-wage"
+                  placeholder="Hourly Wage"
+                  aria-placeholder="hourly-wage"
+                  required
+                />
+              </div>
+              <div class="button-div">
+                <button type="submit">submit</button>
+              </div>
+            </form>
+          </div>
+          <div class="staff-view">
+            <label for="staff-list-view">Staff List</label>
+            {{template "staff-list-view" .}}
+          </div>
+        </div>
+      </div>
+      <hr />
+      <br />
+      <br />
+    </div>
+    <script></script>
+  </body>
+  <script src="./js/js-time.js"></script>
+  <script src="./js/timeout-checker.js"></script>
+</html>

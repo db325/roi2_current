@@ -1,0 +1,16 @@
+{{define "delete-drive"}}
+
+<div style="display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: auto;
+    text-align: center;
+    align-items: center;">
+<p>You are about to delete <em>{{.DriveDate}}</em>. <br>Are you sure?</p><br>
+{{.Index}}
+<a href="oic-main?locations={{.Index}}" class="details-link">NO</a> -----  <a href="deletedrive?number={{.Index}}&drivedate={{.DriveDate}}" class="details-link">YES</a>
+</div>
+
+
+{{end}}
+

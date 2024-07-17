@@ -1,0 +1,215 @@
+{{define "bloodDrives-view"}}
+
+
+
+    {{if .Center.BloodDrives}}
+
+    
+       
+    {{range $_, $drives := .Center.BloodDrives}}
+
+    <div class="data-display">
+
+    <div id="location">
+    <h3 class="title">Location</h3>
+    <p id="drive-location">{{$drives.DriveType.Location}}</p>
+    </div>
+
+    <div>
+    <h3 class="title">Date - Time</h3>
+    <p id="drive-date-time" name="drive-date-time">{{$drives.DriveType.Date}}<br>{{$drives.DriveType.StartTime}}</p>
+
+    </div>
+
+    <div>
+    <h3 class="title">Donor Data</h3>
+        <div class="cell-container-blood">
+        <label>Pool</label>
+        <p id="drive-pool">{{$drives.DriveType.DonorPool}}</p>
+        </div>
+
+    <div class="cell-container-blood">
+    <label>Reg</label>
+    <p>{{$drives.DriveType.NumOfRegisteredDonors}}</p>
+    </div>
+
+    <div class="cell-container-blood">
+    <label>Defer</label>
+    <p id="drive-deferred">{{$drives.DriveType.DeferredDonors}}</p>
+    </div>
+
+
+    </div>
+
+
+
+    <div>
+        <h3 class="title">WholeBlood Collected</h3>
+    units collected per hour:{{$drives.GetUnitsCollectedPerHr}}
+    cost per: wb unit {{$drives.GetCostPerUnit}}
+        <div class="cell-container-blood">
+        <label>Total</label>
+        <p style="color:crimson;" >{{$drives.DriveType.WholeBloodCount.Total}}</p>
+        </div>
+    
+        <div class="cell-container-blood">
+            <label>O Pos</label> 
+            <p>{{$drives.DriveType.WholeBloodCount.OPositive}}</p>
+        </div>
+        <div class="cell-container-blood">
+            <label> O Neg</label>
+            <p>{{$drives.DriveType.WholeBloodCount.ONegative}}</p>
+        </div>
+
+        <div class="cell-container-blood">
+            <label>A Pos</label>
+            <p> {{$drives.DriveType.WholeBloodCount.APositive}}</p>
+        </div>
+        <div class="cell-container-blood">
+            <label>  A Neg </label>
+            <p>{{$drives.DriveType.WholeBloodCount.ANegative}}</p>
+        </div>
+
+        <div class="cell-container-blood">
+            <label> B Pos</label>
+            <p>{{$drives.DriveType.WholeBloodCount.BPositive}}</p>
+        </div>
+
+        <div class="cell-container-blood">
+        <label>B Neg</label>
+        <p>{{$drives.DriveType.WholeBloodCount.BNegative}}</p>
+        </div>
+
+        <div class="cell-container-blood">
+        <label>AB Pos</label>
+        <p>{{$drives.DriveType.WholeBloodCount.ABPositive}}</p>
+        </div>
+
+
+        <div class="cell-container-blood">
+        <label>AB Neg</label>
+        <p>{{$drives.DriveType.WholeBloodCount.ABNegative}}</p>
+        </div>
+
+    </div>{{/* end wholeblood collected div */}}
+
+
+
+    {{/* <div>
+        <h3 class="title">WholeBlood Breakdown</h3>
+
+            <br>
+        :  <br>
+        
+        <br>
+        :  <br>
+            :  <br>
+            : <br>
+            : <br>
+        </div>
+
+
+    <div> */}}
+    <div>
+    <h3 class="title">FFP/PF24 Created</h3>
+    <p>{{$drives.DriveType.NumOfFFPPF24}}</p>
+    </div>
+
+
+    <div>
+        <h3 class="title">(Hrly)Average<span class="info" title="values are rounded up"></span></h3>
+        <div class="cell-container">
+            <label>Collecting</label>
+            <p>${{printf "%.2f" $drives.GetACH}}</p>
+        </div>
+        <div class="cell-container">
+        <label>Supporting</label>
+        <p>${{ printf "%.2f" $drives.GetASH}}</p>
+        </div>
+        <div class="cell-container">
+        <label>Processing</label> 
+        <p>${{printf "%.2f" $drives.GetAPH}}</p>
+        </div>
+    </div>
+
+    <div>
+    <h3 class="title">Actual Cost(supplies)</h3>
+        <div class="cell-container">
+            <label>Collection</label> 
+            <p>${{printf "%.2f" $drives.GetCollectionSuppliesTotal}}<p>
+        </div>
+
+    <div class="cell-container">
+        <label>Processing</label> 
+        <p>${{$drives.GetProcessingSuppliesTotal}}</p>
+    </div> 
+
+
+        <div class="cell-container"><label>Testing</label> <p>${{printf "%.2f" $drives.GetTestingSuppliesTotal}}</p> </div>
+    </div>
+
+
+
+    <div>
+        <h3 class="title">Actual Cost(wages)</h3>
+        <div class="cell-container">
+            <label>Support</label>
+            <p>${{printf "%.2f" $drives.GetTotalSupport}}</p>
+        </div>
+    
+
+        <div class="cell-container">
+            <label>Collection</label>
+            <p>${{printf "%.2f" $drives.GetTotalCollecting}}</p>
+        </div>
+
+        <div class="cell-container">
+            <label>Processing</label>
+            <p>${{printf "%.2f" $drives.GetTotalProcessing}}</p>
+        </div>
+
+
+
+    </div>
+
+    <div>
+        <h3 class="title">Actual Cost(transport)</h3>
+        <div class="cell-container">
+            <label for="travel">Travel</label><p id="travel">${{printf "%.2f" $drives.GetTotalTravel}}</p>
+        </div>
+        <div class="cell-container">
+        <label for="shipping">Shipping</label><p id="shipping">${{printf "%.2f" $drives.Cost.TDY.Shipping}}</p>
+        </div>
+
+    </div>
+
+    <div id="total-expenses">
+    <h3 class="title">Total Expenses</h3>
+    <div class="cell-container">
+    <span style="font-weight:900">${{printf "%.2f" $drives.GetTotalExpenses}}</span>
+    </div>
+    </div>
+
+
+
+
+    <div>
+    <h3 class="title">Entered By</h3>
+    <p>{{$drives.DriveType.Signature}}</p>
+
+    </div>
+
+
+    </div>
+
+    {{end}}
+
+<script src="./js/js-time.js"></script>
+  <script src="./js/timeout-checker.js"></script>
+
+
+{{end}}
+
+      
+
+{{end}}

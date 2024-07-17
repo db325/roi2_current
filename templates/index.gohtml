@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>{{.Title}}</title>
+</head>
+<style>
+
+ .form-input>input::placeholder{
+        color: var(--DHAB);
+        font-weight: 900;
+        text-align: center;
+      }
+
+</style>
+<body>
+   
+<div class="sub-page">
+{{template "sub-page-nav" .}}
+<div class="main-content">
+ <span class="page-data">
+  <h2>{{.IntroText}}</h2>
+  <p>Enter the AVERAGE cost for the values below.</p>
+</span>
+    {{/* <label for="drive-expense-form">{{.Today}}</label> */}}
+  <form action="/process-default" method="Post" class="data-entry creation-panel drive-expenses" id="drive-expense-form">
+
+
+    <div class="form-input ">
+
+    <p aria-label-for="collection-sup" class="tooltip-container" onclick="toggleExplanation('explanation-collection-sup')"><i class="fa fa-info-circle"></i>Collection Supplies</p>   
+    {{/* <span id="little-text">current value ${{.Center.Default.Inhouse.CollectionSupplies}}</span> */}}
+   
+   <div class="definition" id="explanation-collection-sup">
+      Average cost of supplies to collect a unit of whole blood.  Includes bags, needles, band-aids, ace bandage, lancet, gauze, etc. 
+      Update at least annually.
+      </div> 
+    <input class="spacing"  type="number" step="0.01" name="collection-sup" id="collection-sup"required placeholder="current value ${{.Center.Default.Inhouse.CollectionSupplies}}"> 
+      
+    </div>
+
+    <div class="form-input">
+    <p aria-label-for="processing-sup" class="tooltip-container" onclick="toggleExplanation('explanation-processing-sup')"><i class="fa fa-info-circle"></i>Processing Supplies</p>
+    {{/* <span id="little-text">current value ${{.Center.Default.Inhouse.ProcessingSupplies}}</span> */}}
+    
+    <div class="definition" id="explanation-processing-sup">
+      Average cost of supplies used to convert a unit of whole blood to RBCs and FFP/PF24.  Update at least annually.
+      </div>
+    <input class="spacing" type="number" name="processing-sup" id="processing-sup" step="0.01" required placeholder="current value ${{.Center.Default.Inhouse.ProcessingSupplies}}">
+     
+    </div>
+
+    <div class="form-input">
+      <p aria-label-for="testing" class="tooltip-container" onclick="toggleExplanation('explanation-testing')"><i class="fa fa-info-circle"></i>Testing </p>
+    {{/* <span id="little-text">current value ${{.Center.Default.Inhouse.Testing}}</span> */}}
+      <div class="definition" id="explanation-testing">
+      Average cost of testing a donor's blood (regardless of whether the testing provider is DoD or civilian) plus average cost of shipping per donor to the testing facility.  E.g., $50/per donor to test plus $3.50/donor to ship (an estimated average based on $35 per shipment with 100 donor samples) = $50.35 per donor.  Update at least annually.
+      </div> 
+    
+      <input class="spacing"  type="number" step="0.01" name="testing" id="testing" required placeholder="current value ${{.Center.Default.Inhouse.Testing}}">
+    </div>
+    <div class="form-input">
+    <p aria-label-for="averageCivilianRbc" class="tooltip-container" onclick="toggleExplanation('explanation-averageCivilianRbc')"><i class="fa fa-info-circle"></i>Average Civilian RBC Price</p>
+    {{/* <span id="little-text">current value ${{.Center.Default.Inhouse.AverageCivilianRBC}}</span> */}}
+    <div class="definition" id="explanation-averageCivilianRbc">
+    Average price of an RBC unit purchased from a local civilian agency.  Update at least annually.
+    </div>
+    <input class="spacing"
+      type="number" 
+      step="0.01" 
+      id="averageCivilianRbc" 
+      name="averageCivilianRbc" 
+      required placeholder="current value ${{.Center.Default.Inhouse.AverageCivilianRBC}}">
+    </div>
+
+    <div class="form-input">
+    <p aria-label-for="averageCivilianFFPpF24" class="tooltip-container" onclick="toggleExplanation('explanation-averageCivilianFFPpF24')"><i class="fa fa-info-circle"></i>Average Civilian FFP/PF24</p>
+    {{/* <span id="little-text">current value ${{.Center.Default.Inhouse.AverageCivilianFFPpF24}}</span> */}}
+    <div class="definition" id="explanation-averageCivilianFFPpF24">
+    Average price of an FFP/PF24 unit purchased from a local civilian agency.  Update at least annually.    </div>
+    <input class="spacing"  type="number" step="0.01" id="averageCivilianFFPpF24" name="averageCivilianFFPpF24" required placeholder="current value ${{.Center.Default.Inhouse.AverageCivilianFFPpF24}}">
+    </div>
+
+
+
+    <div class="form-input">
+    <p>Signature</p>
+    <input class="spacing"  type="text" name="signature" id="signature"required placeholder="current value {{.Center.Default.Sig}}">
+    </div>
+    <input type="number" name="locations"value="{{.Center.Num}}" hidden>
+
+    <div class="button-div">  <button type="submit" id="butt" style="margin-left: auto;
+    margin-right: auto;">submit</button> </div>
+    </div>
+    
+  </form>
+  
+</div>
+
+
+
+<script>
+    function toggleExplanation(explanationId) {
+ 
+      var explanation = document.getElementById(explanationId);
+      if (explanation.style.display === 'none') {
+        explanation.style.display = 'block';
+      } else {
+        explanation.style.display = 'none';
+      }
+    }
+        
+
+   
+</script>
+
+<script src="./js/js-time.js"></script>
+<script src="./js/timeout-checker.js"></script>
+
+
+
+
+</body>
+</html>

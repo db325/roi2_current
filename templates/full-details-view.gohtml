@@ -1,0 +1,88 @@
+{{define "full-details"}}
+
+{{if .}}
+{{$drive:=.}}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{.Title}}</title>
+  </head>
+  <body>
+    <div class="sub-page">
+      {{template "sub-page-nav" .}}
+      <div class="main-content">
+        {{/* <div class="center-info" style="margin:0;">
+          <h3 style="font-size:14px;">{{.Center.Name}}</h3>
+         
+          <p>Phone: {{.Center.Phone}}</p>
+        </div> */}}
+       {{/*{{template "select-drive" .}}*/}} 
+        <span class="page-data">
+          <h2>{{.IntroText}}</h2>
+          <p>{{.Drive.DriveType.Date}}</p>
+        </span>
+
+        <div class="slide-controls">
+        
+        
+            <button class="tablinks full-data-button" onclick="showHide(event, 'blood')" id="defaultOpen">Blood</button>
+            <button class="tablinks full-data-button" onclick="showHide(event, 'cost')">Cost</button>
+            <button class="tablinks full-data-button" onclick="showHide(event, 'donor')">Donor</button>
+        
+        </div>
+
+
+        <div class="slide-container">
+          <div class="slide-content" id="blood">{{template "blood-data" .Drive}}</div>
+          <div class="slide-content" id="cost">{{template "cost-data" .Drive}}</div>
+          <div class="slide-content" id="donor">{{template "donor-data" .Drive}}</div>
+        </div>
+{{template "comments" .}}
+{{template "comments-view" .}}
+      </div>
+      
+    </div>
+  </body>
+
+  <script>
+  
+  
+  function showHide(evt, name) {
+  // Declare all variables
+  var i, slidecontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  slidecontent = document.getElementsByClassName("slide-content");
+  for (i = 0; i < slidecontent.length; i++) {
+    slidecontent[i].style.display = "none";
+  }
+
+  
+  buttons = document.getElementsByClassName("full-data-button");
+  for (i = 0; i < buttons.length; i++) {
+    buttons[i].className = buttons[i].className.replace(" active", "");
+   
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(name).style.display = "flex";
+   
+  evt.currentTarget.className += " active";
+}
+  document.getElementById("defaultOpen").click();
+  </script>
+</html>
+
+
+
+
+
+
+{{end}}
+
+
+{{end}}
+
+

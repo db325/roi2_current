@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- https://material.io/resources/icons/?style=baseline -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <!-- https://material.io/resources/icons/?style=outline -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined"
+      rel="stylesheet"
+    />
+
+    <!-- https://material.io/resources/icons/?style=round -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Round"
+      rel="stylesheet"
+    />
+
+    <!-- https://material.io/resources/icons/?style=sharp -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+
+    <!-- https://material.io/resources/icons/?style=twotone -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone"
+      rel="stylesheet"
+    />
+    <!-- import bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <title>{{.Title}}</title>
+  </head>
+
+  <body>
+    <h3>{{.IntroText}}</h3>
+    <form action="./staff-portal" method="get" class="getcenter">
+      {{template "getcenter" .}}
+    </form>
+
+    <!-- 
+<form action="./data-entry" method="get">
+    {{template "drive-dates-view" .}}
+
+</form> -->
+
+    {{template "staff-donor-center-view" .}}
+  </body>
+  <script src="./js/js-time.js"></script>
+  <script src="./js/timeout-checker.js"></script>
+</html>

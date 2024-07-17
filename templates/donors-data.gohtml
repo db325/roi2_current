@@ -1,0 +1,113 @@
+{{define "donor-data"}}
+    {{$drive := .}}
+
+    <div class="donor-data-top">
+        <div class="other-display-card" id="donor">
+            <div class="top">
+                <div id="donor-stats">
+                    <label>Donors</label>
+                </div>
+                <div>
+                    <label><span>Total :</span></label>
+                    <p class="donor-total">{{$drive.GetActualDonors}}</p>
+                </div>
+            </div>
+            <div class="labels_results">
+                <div id="labels" class="even data-card-label">
+                    <span><h5 class="data-card-label-text">Registered</h5></span>
+                    <span><h5 class="data-card-label-text">Deferred</h5></span>
+                </div>
+                <div id="results" class="even">
+                    <span>
+                        <p id="apositive" class="donor-total">{{$drive.DriveType.NumOfRegisteredDonors}}</p>
+                    </span>
+                    <span>
+                        <p id="anegative" class="donor-total">{{$drive.DriveType.DeferredDonors}}</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="other-display-card" id="collection">
+            <div class="top">
+                <div id="collection-stats">
+                    <label>Collection Stats</label>
+                </div>
+                <div>
+                    <label><span>Hourly</span></label>
+                    <p class="donor-total">{{printf "%.2f" $drive.GetUnitsCollectedPerHr}}</p>
+                </div>
+            </div>
+            <div class="labels_results">
+                <div id="labels" class="even data-card-label">
+                    <span><h5 class="data-card-label-text">Collection per Person</h5></span>
+                    <span><h5 class="data-card-label-text">Process per Person</h5></span>
+                </div>
+                <div id="results" class="even">
+                    <span>
+                        <p id="apositive">{{printf "%.2f" $drive.GetUnitsPerPerson}}</p>
+                    </span>
+                    <span>
+                        <p id="anegative">{{printf "%.2f" $drive.GetProcessPerPerson}}</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="donor-data-bottom">
+        <div class="other-display-card">
+            <div class="top">
+                <div id="staff-stats">
+                    <label>Staff</label>
+                </div>
+                <div style="width:85% !important;">
+                    <label><span>Total (staff):</span></label>
+                    <p class="donor-total">{{len $drive.Staff}}</p>
+                    <hr>
+                    <label><span>Total (hours):</span></label>
+                    <p class="donor-total">{{$drive.GetTotalStaffHours}}</p>
+                </div>
+            </div>
+            <div class="labels_results">
+                <div id="labels" class="data-card-label">
+                    <span><h5 class="data-card-label-text">Support</h5></span>
+                    <span><h5 class="data-card-label-text">Collect</h5></span>
+                    <span><h5 class="data-card-label-text">Process</h5></span>
+                </div>
+                <div id="results">
+                    <span>
+                        <span class="results-innerspan">
+                            <img src="./svg/person-3.svg" class="icon">
+                            <p>{{$drive.WhoDidWhat.Supporting}}</p>
+                        </span>
+                        <span class="results-innerspan">
+                            <img src="./svg/clock-two.svg" class="icon">
+                            <p>{{$drive.GetTotalSupportHours}}</p>
+                        </span>
+                    </span>
+                    <span>
+                        <span class="results-innerspan">
+                            <img src="./svg/person-3.svg" class="icon">
+                            <p>{{$drive.WhoDidWhat.Collecting}}</p>
+                        </span>
+                        <span class="results-innerspan">
+                            <img src="./svg/clock-two.svg" class="icon">
+                            <p>{{$drive.GetTotalCollectionHours}}</p>
+                        </span>
+                    </span>
+                    <span>
+                        <span class="results-innerspan">
+                            <img src="./svg/person-3.svg" class="icon">
+                            <p>{{$drive.WhoDidWhat.Processing}}</p>
+                        </span>
+                        <span class="results-innerspan">
+                            <img src="./svg/clock-two.svg" class="icon">
+                            <p>{{$drive.GetTotalProcessingHours}}</p>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}

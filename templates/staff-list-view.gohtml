@@ -1,0 +1,97 @@
+{{define "staff-list-view"}}
+
+
+<ul  id="staff-list-view">
+{{$num:=.Center.Num}}
+{{range $_,$v:=.Center.StaffList}}
+<li>
+<div class="control-panel" data-worked={{($v.HaveIWorked)}}>
+<label>{{.Name}}</label>
+  <div class="active" style="border-bottom:none !important;">
+{{if .Active}}
+ <form method="post" action="/toggle-active">
+  
+    <input hidden name="name" value="{{.Name}}">
+    <input hidden name="num" value="{{$num}}">
+    <button type="submit" class="activated"  title="active"> <img src="../svg/checkbox_checked.svg" >
+</button>
+  
+  </form>
+{{/* <svg width="24" height="24" src="../svg/checkbox_square.svg" class="red"></svg> deactivate */}}
+
+{{else}} <form method="post" action="/toggle-active">
+  
+    <input hidden name="name" value="{{.Name}}">
+    <input hidden name="num" value="{{$num}}">
+    <button type="submit" class="deactivated" title="not active"><img src="../svg/checkbox_square.svg" ></button>
+  
+  </form>
+{{end}}
+  
+   
+  </div>
+    
+  <div id="delete">
+  <form method="post" action="/remove-staff">
+  
+    <input hidden name="name" value="{{.Name}}">
+    <input hidden name="center" value="{{$num}}">
+    <button type="submit"> Delete </button>
+  
+  </form>
+  
+  </div>
+</div>
+
+</li>
+
+
+
+
+{{end}}
+</ul>
+
+
+
+<script>
+
+var cp = document.getElementsByClassName("control-panel");
+
+console.log(cp)
+for (let c of cp) {
+    console.log(c.dataset.worked);
+if(c.dataset.worked=="true"){
+console.log(c.children[0]," is ",c.dataset.worked)
+c.children[2].style.display="none";
+}else if(c.dataset.worked=="false"){
+c.children[2].style.display="block";
+}
+
+
+
+    
+    c.addEventListener("click",(event)=>{
+    console.log( event,c.children);
+    var name= c.children[0].innerHTML
+   var num={{.Center.Num}}
+   console.log(name,num)
+  
+ 
+   
+    
+    })
+}
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+{{end}}

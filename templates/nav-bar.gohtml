@@ -1,0 +1,28 @@
+{{define "nav-bar"}}
+{{/* 
+needs action variable
+needs Locations array
+
+*/}}
+
+<div id="options" class="nav-bar">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu">
+{{/* <p>To begin, select a donor center from the list below.</p><br><br> */}}
+{{/* <div id="filter" class="nav-bar-selection"><img src="../png/filter.png">Filter</div> */}}
+<div class="center-selection-container">
+
+{{/* <select name="locations" id="locations"class="nav-bar-selection" style="" >
+    <option value="" select>Centers</option>
+        {{ range $k,$v := .Locations}}
+     <option value="{{$k}}">{{$v}}</option>
+        {{end}}
+</select> */}}
+<a href="staff-portal?locations={{.Center.Num}}" class="sub-nav-text"><img src="./png/home.png"/>Dashboard </a>
+
+</div>
+
+
+</div>
+
+
+{{end}}

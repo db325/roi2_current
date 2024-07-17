@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{.Title}}</title>
+  </head>
+  <body>
+    <div class="sub-page">
+      {{template "sub-page-nav" .}}
+      <div class="main-content">
+        <div class="center-info">
+          <h3>{{.Center.Name}}</h3>
+          <p>Phone: {{.Center.Phone}}</p>
+        </div>
+        <span class="page-data">
+          <h2>{{.IntrotText}}</h2>
+          <p></p>
+        </span>
+
+        <div class="slide-container">
+          <div class="slide-content">{{template "blood-data" .}}</div>
+          <div class="slide-content">{{template "cost-data" .}}</div>
+          <div class="slide-content">{{template "donor-data" .}}</div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="./js/js-time.js"></script>
+  <script src="./js/timeout-checker.js"></script>
+</html>

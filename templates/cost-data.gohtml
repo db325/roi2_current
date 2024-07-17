@@ -1,0 +1,119 @@
+{{define "cost-data"}}
+{{$drive:=.}}
+<div class="other-display-card" >
+    <div class="top" >
+        <div id="supplies">
+        <label for="supplies">Supplies</label>
+                    
+        </div>
+        <div>
+        <label>Total:</label><p class="money-total">${{$drive.ThousandsPrinter ($drive.GetSuppliesTotal)}}</p>
+        </div>
+    </div>
+    <div class="labels_results">
+        <div id="labels" class="data-card-label">
+                    <span><h5 class="data-card-label-text">Collect</h5></span>
+                    <span><h5 class="data-card-label-text">Testing</h5></span>
+                    <span><h5 class="data-card-label-text" >Process</h5></span>
+        </div>
+        <div id="results">
+        <span id="collect-supplies"> <p class="money-total">${{$drive.ThousandsPrinter ($drive.GetCollectionSuppliesTotal)}}</p></span>
+                       <span id="collect-test"> <p class="money-total">${{$drive.ThousandsPrinter ($drive.GetTestingSuppliesTotal)}}</p></span>
+                      <span id="bpositive"> <p class="money-total">${{$drive.ThousandsPrinter ($drive.GetProcessingSuppliesTotal)}}</p></span>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="other-display-card" >
+    <div class="top" >
+        <div id="wages">
+        <label for="wages">Wages</label>
+        </div>
+        <div>
+        <label>Total:</label><p class="money-total">${{$drive.ThousandsPrinter ($drive.GetWagesTotal)}}</p>
+    </div>
+    </div>
+    <div class="labels_results" >
+        <div id="labels" class="data-card-label">
+       <span><h5 class="data-card-label-text">Collect</h5></span>
+       <span><h5 class="data-card-label-text">Testing</h5></span>
+       <span><h5 class="data-card-label-text">Process</h5></span>
+        
+        </div>
+        <div id="results">
+         <span id="collect-wages"><p class="money-total">${{$drive.ThousandsPrinter ($drive.GetTotalCollecting)}}</p></span>
+        <span id="support-wages"><p class="money-total">${{$drive.ThousandsPrinter ($drive.GetTotalSupport)}}</p></span>
+        <span id="process-wages"><p class="money-total">${{$drive.ThousandsPrinter ($drive.GetTotalProcessing)}}</p></span>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="other-display-card" >
+    <div class="top" >
+    <div id="transport">
+    <label for="transport">Transport</label>
+    
+    </div>
+    <div>
+    <label>Total Expenses:</label><p class="money-total">${{$drive.ThousandsPrinter ($drive.GetTotalExpenses)}}</p>
+    </div>
+    </div>
+    <div class="labels_results">
+        <div class=" data-card-label" id="labels">
+            <span><h5 class="data-card-label-text">Total(transport costs)</h5></span>
+            <span><h5 class="data-card-label-text">Shipping</h5></span>
+            <span><h5 class="data-card-label-text">Travel</h5></span>
+        </div>
+        <div id="results">
+         <span id="total-transport"><p class="money-total">${{$drive.ThousandsPrinter ($drive.GetTransportTotal)}}</p></span>
+        <span id="shipping-transport"><p class="money-total">${{$drive.ThousandsPrinter ($drive.Cost.TDY.Shipping)}}</p></span>
+        <span id="travel-transport"><p class="money-total">${{$drive.ThousandsPrinter ($drive.GetTotalTravel)}}</p></span>
+        
+        </div>
+    </div>
+</div>
+
+
+
+<div class="other-display-card" >
+    <div class="top" >
+    <div id="breakdown">
+        <label for="breakdown">Breakdown</label>
+    </div>
+    <div>
+    {{$str:=($drive.GetPercentage)}}
+
+     {{if eq $str.Color "green"}}
+        <label>Cost Avoidance:</label><p class="money-total">${{$drive.ThousandsPrinter $drive.GetCostAvoidance}}</p>
+     {{end}}
+     {{if eq $str.Color "yellow"}}
+        <label>Cost Avoidance:</label><p class="money-total-yellow">${{$drive.ThousandsPrinter $drive.GetCostAvoidance}}</p>
+     {{end}}
+     {{if eq $str.Color "red"}}
+        <label>Cost Avoidance:</label><p class="money-total-red">${{$drive.ThousandsPrinter $drive.GetCostAvoidance}}</p>
+     {{end}}
+    
+    </div>
+    </div>
+    <div class="labels_results">
+        <div class=" data-card-label" id="labels">
+          <span><h5 class="data-card-label-text">Cost to Buy {{$drive.DriveType.NumOfFFPPF24}} FFP</h5></span>
+            <span><h5 class="data-card-label-text">Cost to Buy {{$drive.DriveType.WholeBloodCount.Total}} RBC's</h5></span>
+            <span><h5 class="data-card-label-text">Production Cost</h5></span>
+        </div>
+        <div id="results">
+           <span id="ffp-breakdown"><p class="money-total">${{$drive.ThousandsPrinter $drive.GetCostToBuyFFP}}</p></span>
+        <span id="rbc-breakdown"><p class="money-total">${{$drive.ThousandsPrinter $drive.GetCostToBuyRBC}}</p></span>
+        <span id="cost-to-produce"><p class="money-total">${{$drive.ThousandsPrinter $drive.GetCostPerUnit}}</p></span>
+        
+        </div>
+    </div>
+</div>
+
+{{end}}

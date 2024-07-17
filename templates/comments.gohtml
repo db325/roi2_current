@@ -1,0 +1,46 @@
+{{define "comments"}}
+
+{{if .}}
+<div class="comments" id="comments">
+    {{/* <label for="comments">Comments</label> */}}
+    <form  method="post" action="/add-note" id="add-notes">
+
+    
+      <input type="text" hidden name="signature"value="{{.CommentSig}}">
+      <input type="text" name="drive-date" value="{{.Drive.DriveType.Date}} {{.Drive.DriveType.StartTime}}" hidden>
+      <input type="number" name="center-number" value="{{.Center.Num}}" hidden>
+    </form>
+
+    <textarea id="notes" name="comments"rows="4" type="text" form="add-notes" placeholder="enter comments about the drive here and press submit."></textarea>
+
+    <button type="submit" form="add-notes">Submit</button>
+
+</div>
+
+
+{{end}}
+
+
+{{end}}
+
+
+
+
+
+
+{{/* 
+<div class="comments" id="comments">
+
+  <label for="comments">Comments</label>
+
+    <form  method="post" action="/add-note" id="add-notes" >                
+            <textarea id="notes" name="comments"
+                rows="4" type="text"></textarea>
+            <input type="text" hidden name="signature"value=" ~OIC">
+            <input type="text" name="drive-date" value="{{.DriveType.Date}} {{.DriveType.StartTime}}" hidden>
+            <input type="number" name="center-number" value="{{.Center.Num}}" hidden>
+    
+      </form>
+<div> */}}
+ </div>
+</div>

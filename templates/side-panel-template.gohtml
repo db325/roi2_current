@@ -1,0 +1,36 @@
+{{define "side-panel"}}
+
+
+
+  <div class="side-panel">
+  <div class="side-panel-selections">
+           {{/* <a href="" >   <div><img src="./png/home.png" class="panel-icon">  </div>Dashboard </a> */}}
+               {{/* <div><img src="./png/settings.png" class="panel-icon"> <a href="index?location={{.Center.Num}}" class="side-panel-selection-text">Configure Defaults</a></div> */}}
+
+<a href="index?location={{.Center.Num}}"><div><img src="./png/settings.png" class="panel-icon"></div>Configure Defaults</a>
+
+                {{if ne .Center.Default.Sig ""}}
+           <a href="create-drive?location={{.Center.Num}}" class="side-panel-selection-text"> <div>  <img src="./png/calendar.png" class="panel-icon"></div> Create a Blood Drive</a>
+                {{end}}
+            
+             <a href="add-staff?location={{.Center.Num}}"><div><img src="./png/user_square.png" class="panel-icon"></div>Create/Edit Staff</a>
+             </div>
+               
+                {{template "legend"}}
+                {{/* {{template "filter-view" .}} */}}
+                  <img src="./png/logo2014.png">  
+            </div>
+
+
+
+
+ {{/* <a href="add-staff?location={{.Center.Num}}" class="side-panel-selection-text">Create Staff</a> */}}
+
+
+
+
+
+
+
+
+{{end}}

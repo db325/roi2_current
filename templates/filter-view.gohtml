@@ -1,0 +1,31 @@
+{{define "filter-view"}}
+{{if .Center.BloodDrives}}
+<div style="display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-top: 20px;
+  width: 100%;
+  font-family: 'Roboto Slab';">
+{{$num:=.Center.Num}}
+<label for="filter-form" style="padding:10px;">Filter</label>
+<form method="get" action="/filter" id="filter-form" style="align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;">
+<input type="text" placeholder="green,yellow, or red" name="color"required  style="margin:10px;">
+<input hidden type="number" name="center-number" value="{{$num}}">
+<button type="submit"  >go</button>
+
+</form>
+
+</div>
+{{end}}
+
+
+
+
+
+
+
+{{end}}

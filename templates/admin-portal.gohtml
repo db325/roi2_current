@@ -1,0 +1,103 @@
+{{define "admin-portal"}}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{.Title}}</title>
+</head>
+<body>
+<style>
+{{/* add styles for the text,padding etc */}}
+
+
+.card {
+    width: 300px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    text-align: left;
+    padding: 10px;
+}
+.color{
+    color: navy;
+}
+</style>
+   {{/* data should be an [] of centers thaT  hold account data */}}
+   {{template "account-management" .}}
+</body>
+<script>
+
+
+    function centersWithDrives(data){
+        var centers = data;
+        var centersWithDrives = [];
+        for(var i = 0; i < centers.length; i++){
+            var center = centers[i];
+            if(center.bloodDrives!=null|| center.bloodDrives!=undefined){
+                centersWithDrives.push(center);
+            }
+        }
+        return centersWithDrives;
+    }
+
+    function showStaffData(center){
+        var staff = center.staffList;
+        var staffData={};
+        for(var name in staff){
+            if(staff.hasOwnProperty(name)){
+                var staffMember = staff[name];
+                console.log(staffMember);
+                staffData[staffMember.name] = staffMember;
+            }
+        }
+        return staffData;
+    }
+
+
+    function createDisplayCard(staff){
+            var card = document.createElement("div");
+            card.className = "card";
+            var cardBody = document.createElement("div");
+            cardBody.className = "card-body";
+            var cardTitle = document.createElement("h5");
+            cardTitle.className = "card-title";
+            cardTitle.innerHTML = staff.name;
+            var cardText = document.createElement("p");
+            cardText.className = "card-text";
+            console.log(cardText.innerHTML,"<----cardText")
+            var drivehrsarray = Object.entries(staff.drivehours);
+            
+            for(var i = 0; i < drivehrsarray.length; i++){
+                    var drivedate = drivehrsarray[i];
+                    cardText.innerHTML += "Drive Date: " +`<span>${drivedate[0]}</span>`  +"</br>"+ " Hours Collecting: " + `<span class="color">${drivedate[1].hrscollecting}</span>` + "<br>"+ " Hours Supporting: "+`<span class="color">${drivedate[1].hrssupporting}</span>` + "<br>"+ " Hours Processing: " +`<span class="color">${drivedate[1].hrsprocessing}</span>` + "<br>";
+            }
+
+            cardBody.appendChild(cardTitle);
+            cardBody.appendChild(cardText);
+            card.appendChild(cardBody);
+            document.body.appendChild(card); // Append the card to the body
+            return card;
+    }
+
+
+
+</script>
+<script src="./js/js-time.js"></script>
+<script src="./js/timeout-checker.js"></script>
+</html>
+
+
+
+{{end}}

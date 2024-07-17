@@ -1,0 +1,41 @@
+{{define "centers-view"}}
+{{/* this template uses a DonorCenter struct */}}
+{{if .Center}}
+
+<div id="donor-center" style="text-align:center;" >
+        <h3>{{.Center.Name}}</h3>
+       
+    <p> {{.Center.Addr.Street}} <br>{{.Center.Addr.CityState}},{{.Center.Addr.Zip}} </p>
+    <p>Phone: {{.Center.Phone}}</p>
+   
+   
+        {{/* <div class="staff-view">
+            <h3> Staff List</h3>
+            {{template "staff-list-view" .}}
+        </div> */}}
+
+            <div class="side-panel">
+                <a href="" class="side-panel-selection-text">Dashboard </a>
+                <a href="index?location={{.Center.Num}}" class="side-panel-selection-text">Configure Defaults</a>
+                {{if ne .Center.Default.Sig ""}}
+                <a href="create-drive?location={{.Center.Num}}" class="side-panel-selection-text">Create a Blood Drive</a>
+                {{end}}
+            
+                <a href="add-staff?location={{.Center.Num}}" class="side-panel-selection-text">Create Staff</a>
+                <hr>
+                {{template "legend"}}
+                {{/* {{template "filter-view" .}} */}}
+                    
+            </div>
+
+                <div class="center-container" >
+                    <h3 class="center-heading">Blood Drives</h3>
+                    {{template "compact-view" .}}
+                </div>
+    </div>
+
+
+
+</div>   {{/*end donor-center div */}}
+{{end}}
+{{end}}

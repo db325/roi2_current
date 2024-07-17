@@ -1,0 +1,43 @@
+{{define "blood-data"}}
+{{$drive:=.}}
+<div class="other-display-card">
+        <div class="top">
+            <div id="whole-blood">
+                    <label>Whole Blood <span>Total :</span></label>
+                    <p class="blood-total">{{$drive.DriveType.WholeBloodCount.Total}}</p>
+                    </div>
+                    <div id="ffp">
+                    <label>FFP <span>Total :</span></label>
+                    <p class="blood-total">{{$drive.DriveType.NumOfFFPPF24}}</p>
+            </div>
+
+        </div>
+         <div class="labels_results" >
+                <div id="labels" class="data-card-label">
+                    <span><h5 class="data-card-label-text">A+</h5></span>
+                    <span><h5 class="data-card-label-text">A-</h5></span>
+                    <span><h5 class="data-card-label-text" >B+</h5></span>
+                    <span><h5 class="data-card-label-text">B-</h5></span>
+                    <span><h5 class="data-card-label-text">O+</h5></span>
+                    <span><h5 class="data-card-label-text">O-</h5></span>
+                    <span><h5 class="data-card-label-text">AB+</h5></span>
+                    <span><h5 class="data-card-label-text">AB-</h5></span>
+
+                </div>
+                <div id="results">
+                       <span> <p id="apositive">{{$drive.DriveType.WholeBloodCount.APositive}}</p></span>
+                       <span> <p id="anegative">{{$drive.DriveType.WholeBloodCount.ANegative}}</p></span>
+                      <span>  <p id="bpositive">{{$drive.DriveType.WholeBloodCount.BPositive}}</p></span>
+                        <span><p id="bnegative">{{$drive.DriveType.WholeBloodCount.BNegative}}</p></span>
+                        <span><p id="opositive">{{$drive.DriveType.WholeBloodCount.OPositive}}</p></span>
+                        <span><p id="onegative">{{$drive.DriveType.WholeBloodCount.ONegative}}</p></span>
+                        <span><p id="abpositive">{{$drive.DriveType.WholeBloodCount.ABPositive}}</p></span>
+                        <span><p id="abnegative">{{$drive.DriveType.WholeBloodCount.ABNegative}}</p></span>
+                </div>
+            </div>
+
+</div>
+
+
+
+{{end}}

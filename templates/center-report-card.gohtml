@@ -1,0 +1,191 @@
+{{define "center-report-card"}}
+
+
+<style>
+    .report-card {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+        background-color: #f9f9f9;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+
+    }
+
+
+    label {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: block;
+        text-align: center;
+        border-bottom: .5px solid darkslateblue;
+    }
+
+
+    .report-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+
+    .report-row span:first-child {
+        font-weight: bold;
+        font-size: 12px;
+        font-family: Arial, sans-serif;
+        color: #333;
+
+
+    }
+
+    .report-row span:last-child {
+        font-weight: normal;
+    }
+
+
+
+    @media (max-width: 767px) {
+        .report-card {
+            max-width: 100%;
+        }
+        .report-row {
+            flex-direction: column;
+        }
+        .report-row span:first-child {
+            margin-bottom: 5px;
+        }
+    }
+    @media (min-width: 768px) and (max-width: 991px) {
+        .report-card {
+                max-width: 80%;
+        margin: auto;
+        }
+    }
+
+
+.key-value {
+    display: flex;
+    flex-direction:column;
+}
+
+
+
+    .red{
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: red;
+    }
+
+    .yellow {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: yellow;
+    }
+
+    .orange {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: orange;
+    }
+
+    .green {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: green;
+    }
+</style>
+
+
+
+
+
+<div class="report-card" >
+     <label >{{.centerName}}</label>
+
+        <div class="report-row">
+            <span>Total Drives</span>
+            <span>{{.totalNumberofDrives}}</span>
+        </div>
+        <div class="report-row">
+            <span>Total Staff</span>
+            <span>{{.totalNumberofStaffMembers}}</span>
+        </div>
+        <div class="report-row">
+            <span>Average Cost per Drive</span>
+            <span>{{.averageCostPerDrive}}</span>
+        </div>
+        <div class="report-row">
+            <span>Average Drive Score</span>
+            <span>
+            <p class="{{.averageDriveScore.Color}}" style="width:14px;height:14px;">{{.averageDriveScore.Number}}</p>   
+            </span>
+        </div>
+        <div class="report-row">
+            <span>Most Time Spent On</span>
+            <span>{{.mostTimeSpentOn}}</span>
+        </div>
+        <div class="report-row">
+            <span>Average Total RBC</span>
+            <span>{{.averageTotalRBC}}</span>
+        </div>
+        <div class="report-row">
+            <span>TDY</span>
+            <span>{{.tDY}}</span>
+        </div>
+        <div class="report-row">
+            <span>In House</span>
+            <span>{{.inHouse}}</span>
+        </div>
+        <div class="report-row">
+            <span>Mobile</span>
+            <span>{{.mobile}}</span>
+        </div>
+        <div class="report-row">
+            <span>Green Drives</span>
+            <span>{{.greenDrives}}</span>
+        </div>
+        <div class="report-row">
+            <span>Yellow Drives</span>
+            <span>{{.yellowDrives}}</span>
+        </div>
+        <div class="report-row">
+            <span>Red Drives</span>
+            <span>{{.redDrives}}</span>
+        </div>
+        <div class="report-row">
+            <span>Average Staff at Each Drive</span>
+            <span>{{.averageStaffAtEachDrive}}</span>
+        </div>
+
+
+
+
+
+</div>
+
+<script>
+
+//update the page every 30 seconds
+    setInterval(function(){
+        location.reload();
+    }, 30000);
+
+
+</script>
+
+
+
+{{end}}
+
+

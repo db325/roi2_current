@@ -1,0 +1,122 @@
+{{define "add-to-drive"}}
+
+{{/* this template works with StaffList map fron the Centers struct 
+as well as the actual BloodDrives
+THE BLOODRIVES MUST BE SENT AS A A QUERY PARAMETER
+
+*/}}
+        {{$drive:= .Drive}}
+        {{$centerStaff:=.Center.StaffList}}
+        {{$location :=.Center.Num}}
+     
+      {{$date:=(print "{{$drive.DriveType.Date}} {{$drive.DriveType.StartTime}}")}}
+        {{if $centerStaff}}
+
+       
+
+
+
+        {{/* does this drive have any staff already */}}
+      <div class="drive-container creation-panel" style="justify-content:normal !important;max-height:auto !important;">
+
+            <form action="/add-to-drive" method="post" style="overflow-x:hidden;overflow-y:scroll;">
+                <input type="text" hidden value="{{$location}}" name="center-num">
+                <input type="text" hidden value="{{$drive.DriveType.Date}} {{$drive.DriveType.StartTime}}" name="date"> 
+                
+              {{/* <fieldset> */}}
+
+               <span class="sticky-label" style="border-radius:30px;">  <h3 class="form-label">{{$drive.DriveType.Date}} {{$drive.DriveType.StartTime}}</h3></span>
+              <div id="{{$drive.DriveType.Date}} {{$drive.DriveType.StartTime}}" class="drive-date">
+            
+                {{/* if this drive has any staff, loop thru center staff and compare*/}}
+              
+                  {{range $centerStaff}}
+                  <i class="fa fa-person"></i>
+                
+                
+               
+                  <div class="person" data-active={{.Active}}>
+                 
+                  {{if .DoIBelong $drive.GetStartTime}}
+                  <label for="{{.Name}}" style="color:green;">{{.Name}}</label>
+
+                  <label class="switch">
+                    <input type="checkbox" value="{{.Name}}" name="remove" id="{{.Name}}" onclick="makeDisabled(this)">remove
+                    <span class="slider round"></span>
+                   
+                  </label>
+
+                  {{else}}
+                         <label for="{{.Name}}" style="color:red;">{{.Name}}</label>
+
+                  <label class="switch">
+                    <input type="checkbox" value="{{.Name}}" name="add" id="{{.Name}}"onclick="makeDisabled(this)" >add
+                    <span class="slider round"></span>
+                   
+                  </label>
+                    
+
+                  
+                  {{end}}
+                 </div>{{/* end person div */}}
+                  {{end}}
+
+
+              </div> {{/*date div*/}}
+
+
+              {{/* <input class="portal-link submit-button" role="button" type="submit" > */}}
+            <button type="submit" style="margin:auto;">submit</button>
+            </form>
+
+                
+      </div>{{/*drive container*/}}
+       
+       
+        {{/* {{end}} */}}
+ 
+
+{{end}}
+<script>
+    var inputs= document.querySelectorAll("input[type='checkbox']") 
+       
+  function makeDisabled(input){
+    let name=input.name
+    if(input.disabled=true){
+        input.disabled=false
+    }
+    inputs.forEach(input=>{
+      if(input.name!==name){
+       input.checked=false
+       //input.disabled=true
+      }else{
+        input.disabled=false
+      }
+    })
+    return
+  }
+
+
+function checkActive(){
+var ppl = document.getElementsByClassName("person")
+  for(p of ppl){
+  console.log(p.dataset.active)
+    if(p.dataset.active=="false"){
+    let name=p.children[0].innerHTML
+    let staff= document.getElementById(name)
+     console.log("THIS IS STAFF: ",staff)
+    staff.className='person person-staff grayed-out';
+    p.className='person grayed-out';
+    
+   
+    }
+  }
+console.log(ppl)
+}
+checkActive()
+
+
+
+</script>
+ 
+{{end}}

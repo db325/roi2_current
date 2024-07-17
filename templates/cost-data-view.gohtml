@@ -1,0 +1,33 @@
+{{define "cost-data-view"}}
+
+
+{{/* this should be wrapped in a form wherever it is used. */}}
+    {{if .Center.BloodDrives}}
+   
+
+    <form>
+    <div id="drive-dates">
+    <p>To begin, please select a drive date from the list below.</p>
+        <select name="Drive" id="Drive">
+    
+            {{ range $_,$v := .TDYDrives}}
+         
+            <option value="{{$v.DriveType.Date}} {{$v.DriveType.StartTime}}">{{$v.DriveType.Date}} {{$v.DriveType.StartTime}}</option>
+            {{end}}
+    </select>
+    <input type="number" hidden value="{{.Center.Num}}" name="location">
+    <button type="submit" formaction="/cost-data" formmethod="get"> Enter</button>
+    
+    
+    
+    </div>
+</form>
+   
+
+
+
+
+
+{{end}}
+{{end}}
+

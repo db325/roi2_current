@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title></title>
+  </head>
+  <body>
+    <style>
+      ::-webkit-scrollbar{
+     
+        width: 8px;
+    height: 7px;
+      }
+      ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    background: var(--DHAR);
+}
+      select#donor-pool{
+        width: 150px;
+        height: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: small;
+        padding: 0;
+        
+        color: var(--DHAR);
+        background: var(--BACK);
+        text-align: center;
+      }
+      .form-input>input::placeholder{
+        color: var(--DHAR);
+        font-weight: 900;
+        text-align: center;
+      }
+    </style>
+    <div class="sub-page">
+      {{template "staff-nav-bar" .}}
+      {{if .Center.BloodDrives}}
+      <!-- <h3>{{.IntroText}}</h3>
+      <div class="help-text">
+        <p>
+          In this section, you can enter information about a particular blood
+          drive. Please enter the <em>required</em> fields below. Once complete,
+          you will be redirected back to the portal.
+        </p>
+      </div> -->
+
+      {{end}}
+      <br />
+      <div class="main-content">
+        <span class="page-data">
+          <h2>Drive Data Entry</h2>
+          <p>Please enter the required fields below.</p>
+        </span>
+        {{if ne .DriveDate ""}}
+     
+     <div class="data-entry-slide-container">
+     
+          <form
+          id="data-entry"
+            action="/data-entry"
+            method="post"
+            class="data-entry creation-panel form-wrap"
+          style="max-height: fit-content;">
+          <h3 class="form-label">Drive Details</h3>
+            <div class="select-container" style="font-weight: 600;">
+
+
+
+              
+                <label for="donor-pool" class="chart-emoji tooltip-container" onclick="toggleExplanation('explanation-donor-pool')"><i class="fa fa-info-circle" style="margin-right:7px;"></i>Donor Pool</label>
+               <div id="explanation-donor-pool" class="definition" >
+                A "training" donor pool refers to a drive that is usually at a training location, where trainees arrive en masse and typically only a small percentage are deferred.  (This could be as few as 10 and as many as a few hundred "trainees".)  Typically drives conducted at Ft. Eustis, Ft. Jackson, Ft. Sam, Parris Island, West Point, Ft. Knox, are among "trainees" - but maybe not all the drives at these locations.  
+                A "non-training" donor pool is where individuals come to donate on their own.  If you conduct multiple training and non-training drives in one month, put them on separate spreadsheets: one for training and one for non-training and set the drive parameters appropriately.
+              </div>
+              <br />
+              <select id="donor-pool" name="donor-pool" style="width: 50%">
+                <br />
+
+                <option value="Trainee">Trainee</option>
+                <option value="Non-Trainee">Non-Trainee</option>
+              </select>
+            </div>
+            <div class="form-input">
+              <label for="where" class="compas tooltip-container" onclick="toggleExplanation('explanation-where')"
+                ><i class="fa fa-info-circle"></i> Where is the drive taking place?</label
+              >
+            <div class="definition" id="explanation-where">
+              Where is the drive physically occuring. For example: Parking Lot, or Building 6 etc.
+            </div>
+              <input
+                class="spacing"
+                type="text"
+                name="where"
+                id="where"
+                required
+                placeholder="current value {{.Drive.DriveType.Location}}"
+              />
+            </div>
+
+            <div class="form-input">
+              <label for="drive-hours" class="clock-emoji tooltip-container" onclick="toggleExplanation('explanation-drive-hours')"
+                ><i class="fa fa-info-circle"></i> Blood Drive Hours</label
+              >
+            <div class="definition" id="explanation-drive-hours">The length of the drive, in hours (e.g., 2.0, 6.5 - round to nearest half hour), from start to finish (excluding travel and setup, which are listed separately below).</div>
+              <input
+                class="spacing"
+                type="number"
+                step="0.5"
+                name="drive-hours"
+                id="drive-hours"
+                required
+                placeholder="current value {{.Drive.DriveType.DriveLength}}"
+              />
+            </div>
+
+            <div class="form-input">
+              <label for="trvl-setup-teardown" class="clock-emoji tooltip-container" onclick="toggleExplanation('explanation-trvl-setup-teardown')"
+                ><i class="fa fa-info-circle" ></i>Travel/Setup/Tear-Down Hours</label
+              >
+  <div class="definition" id="explanation-trvl-setup-teardown">
+    The number of hours spent preparing for and traveling to the blood drive (i.e., gathering supplies, loading trucks, setting up and breaking down equipment, etc.).
+  </div>
+              <input
+                class="spacing"
+                type="number"
+                name="trvl-setup-teardown"
+                id="trvl-setup-teardown"
+                step="0.5"
+                required
+                placeholder="current value {{.Drive.DriveType.TravelSetupTeardown}}"
+              />
+            </div>
+            <div class="form-input"  >
+              <label for="registered-donors" class="ppl-emoji tooltip-container"
+              onclick="toggleExplanation('explanation-registered-donors')"> <i class="fa fa-info-circle"></i> Number of Registered Donors</label
+              >
+<div class="definition" id="explanation-registered-donors">
+  Registered means ASBP 572 completed or some other formal / completed registration. NOTE: "Registered" for this purpose does not mean an actual donation - it means that paperwork was completed.
+</div>
+              <input
+                class="spacing"
+                type="number"
+                name="registered-donors"
+                id="registered-donors"
+                required
+                placeholder="current value {{.Drive.DriveType.NumOfRegisteredDonors}}"
+              />
+            </div>
+
+            <div class="form-input">
+            <label for="deferred-donors" class="ppl-emoji tooltip-container"  onclick="toggleExplanation('explanation-deferred-donors')"
+                ><i class="fa fa-info-circle"></i> Deferred Donors</label
+              >
+          <div class="definition" id="explanation-deferred-donors">The number of donors who completed the ASBP 572 but were then deferred from donating.</div>
+              <input
+                class="spacing"
+                type="number"
+                id="deferred-donors"
+                name="deferred-donors"
+                required
+                placeholder="current value {{.Drive.DriveType.DeferredDonors}}"
+              />
+            </div>
+            <div class="form-input">
+              <label for="ffp-created">Number of FFP/PF24 Created</label>
+
+              <input
+                class="spacing"
+                type="number"
+                name="ffp-created"
+                id="ffp-created"
+                required
+                placeholder="current value {{.Drive.DriveType.NumOfFFPPF24}}"
+              />
+            </div>
+
+
+
+
+            
+          
+            <input
+              class="spacing"
+              type="text"
+              name="signature"
+              id="signature"
+              required
+              hidden
+              value="~Drive Staff"
+            />
+            <input
+              type="text"
+              hidden
+              name="drive-date"
+              value="{{.DriveDate}}"
+            /><br />
+            <input
+              type="number"
+              hidden
+              value="{{.Index}}"
+              name="index"
+            /><br /><br />
+
+           
+          </form>
+
+
+
+
+        <div class="creation-panel form-wrap data-entry"style="max-height: fit-content;">
+
+
+          <h3 class="form-label">Whole Blood Collection</h3>
+          <div class="form-input">
+            <label for="o-pos">O+</label>
+            <input type="number" id="o-pos" name="o-pos" required placeholder="{{.Drive.DriveType.WholeBloodCount.OPositive}}" form="data-entry" />
+          </div>
+
+          <div class="form-input">
+            <label for="o-neg">O-</label>
+            <input type="number" id="o-neg" name="o-neg" required placeholder="{{.Drive.DriveType.WholeBloodCount.ONegative}}" form="data-entry"/>
+          </div>
+
+          <div class="form-input">
+            <label for="a-pos">A+</label>
+            <input type="number" id="a-pos" name="a-pos" required placeholder="{{.Drive.DriveType.WholeBloodCount.APositive}}" form="data-entry"/>
+          </div>
+
+          <div class="form-input">
+            <label for="a-neg">A-</label>
+            <input type="number" id="a-neg" name="a-neg" required placeholder="{{.Drive.DriveType.WholeBloodCount.ANegative}}" form="data-entry"/>
+          </div>
+          <div class="form-input">
+            <label for="b-pos">B+</label>
+            <input type="number" id="b-pos" name="b-pos" required placeholder="{{.Drive.DriveType.WholeBloodCount.BPositive}}" form="data-entry"/>
+          </div>
+          <div class="form-input">
+            <label for="b-neg">B-</label>
+            <input type="number" id="b-neg" name="b-neg" required placeholder="{{.Drive.DriveType.WholeBloodCount.BNegative}}" form="data-entry"/>
+          </div>
+          <div class="form-input">
+            <label for="ab-pos">AB+</label>
+
+            <input type="number" id="ab-pos" name="ab-pos" required placeholder="{{.Drive.DriveType.WholeBloodCount.ABPositive}}" form="data-entry"/>
+          </div>
+          <div class="form-input">
+            <label for="ab-neg">AB-</label>
+            <input type="number" id="ab-neg" name="ab-neg" required placeholder="{{.Drive.DriveType.WholeBloodCount.ABNegative}}" form="data-entry"/>
+          </div>
+          
+          
+          <button
+          form="data-entry"
+          type="submit"
+          id="butt"
+          style="margin-top: 15px; margin-left: 5%; margin-right: 5%"
+        >
+          submit
+        </button>
+
+        </div>  
+    </div>
+          
+      {{end}}
+
+      <script>
+    function toggleExplanation(explanationId) {
+ 
+      var explanation = document.getElementById(explanationId);
+      if (explanation.style.display === 'none') {
+        explanation.style.display = 'block';
+      } else {
+        explanation.style.display = 'none';
+      }
+    }
+        
+
+   
+      </script>
+   
+   <script src="./js/js-time.js"></script>
+   <script src="./js/timeout-checker.js"></script>
+
+    <!-- end -->
+  </body>
+</html>
+
+
+
+
+
+  

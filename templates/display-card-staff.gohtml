@@ -1,0 +1,141 @@
+{{define "display-card-staff"}}
+
+
+
+    {{if and .Center.BloodDrives .Center.StaffList}}
+    {{$location:=.Center.Num}}
+            {{$number:=.Center.Num}}
+        {{range $_, $drives := .Center.BloodDrives}}
+            {{$str:=($drives.GetPercentage)}}
+        <div class="display-card" style="margin-top:30px;"data-date={{$drives.DriveType.Date}}   data-color={{$str.Color}}        data-category={{$drives.DriveType.Kind}}>
+                <div class="labels_div" style="width:100%;">
+                    <div class="staff-display-div" style="width: 100%;display: flex;flex-direction: row;">
+                        <div class="staff-date"> <img src="./svg/blood-bank.svg">  <label for="date-time-tdy"class="data-card-label-text">{{$drives.DriveType.Kind}} </label></div>
+                        <div class="staff-date"> <img src="./svg/building.svg"> <label class="data-card-label-text">  {{$drives.DriveType.Location}}</label></div>
+                    </div>
+                        
+            </div>
+                <div id="date-time-tdy" class="date-time-tdy staff-display-div" style="display:flex;flex-direction:row;">
+                        <div style="width:100%;
+                                    display: flex;
+                                    flex-direction: row;">
+                           <div class="staff-date"><img src="./svg/calendar.svg"> <label class="data-card-label-text">{{$drives.DriveType.Date}}</label></div>
+                           <div class="staff-date"> <img src="./svg/clock-two.svg"><label class="data-card-label-text">{{$drives.DriveType.StartTime}}</label></div>
+                        </div>
+                        
+                </div>
+
+                <div class="labels_results" style="display:flex;flex-direction:column;">
+                    <div id="labels" class="data-card-label staff-display-div">
+                        <span><img src="./svg/money-savings.svg" class="icon" title="production cost per wholeblood uniit"><h5 class="data-card-label-text">Cost Production<span class="info" title="overall cost per wholeblood uniit"></span></h5></span>
+                        <span><img src="./svg/donation.svg" class="icon"><h5 class="data-card-label-text">Collections Per Hour</h5></span>
+                        <span><img src="./svg/cogs.svg" class="icon" title="whole blood units produced per hour"><h5 class="data-card-label-text" >Production Per Hour<span class="info" title="whole blood units produced per hour"></span></h5></span>
+                        {{/* <span><img src="./svg/avoidance.svg" class="icon"><h5 class="data-card-label-text">Cost Avoidance<span class="info" title="how much you saved or didn't save"></span></h5></span> */}}
+                        
+                                {{if eq $str.Color "green"}}
+                                <span><img src="./svg/avoidance.svg" class="icon"title="amount saved by collecting and processing the blood, rather than purchasing from a civilian source"><p class="data-card-label-text"><h5 class="data-card-label-text">Cost Avoidance</h5>
+                                {{end}}</span>
+
+                            {{if eq $str.Color "yellow"}}
+                                <span><img src="./svg/avoidance.svg" class="icon" title="amount saved by collecting and processing the blood, rather than purchasing from a civilian source"><p class="data-card-label-text"><h5 class="data-card-label-text">Cost Avoidance</h5>
+                                {{end}}</span>
+
+                            {{if eq $str.Color "red"}}
+                                <span><img src="./svg/avoidance.svg" class="icon" title="amount saved by collecting and processing the blood, rather than purchasing from a civilian source"><p class="data-card-label-text"><h5 class="data-card-label-text">Cost Avoidance</h5>
+                                {{end}}</span>
+
+                    </div>
+                    <div id="results" class="staff-display-div">
+                        <span>  <p class="data-card-label-text">${{printf "%.2f" $drives.GetCostPerUnit}}</p></span>
+                        <span><p class="data-card-label-text">{{printf "%.2f" $drives.GetUnitsCollectedPerHr}}</p></span>
+                        <span> <p class="data-card-label-text">{{$drives.SetPH}}</p></span>
+                        <span> <p class="data-card-label-text">${{$drives.ThousandsPrinter ($drives.GetCostAvoidance)}}</p></span>
+                        {{/* <span><p class="data-card-label-text">{{$drives.Float2String ($str.Number)}}&percnt;</p> </span> */}}
+            
+                    </div>
+                </div>
+
+                <div id="data-entry-staff">
+                        {{$drivedate:=.DriveType.Date}}
+                        {{$drivetime:=.DriveType.StartTime}}
+                            <a href="/data-entry?locations={{$number}}&Drive={{$drives.DriveType.Date}} {{$drives.DriveType.StartTime}}"  class="details-link">Collection Data</a>
+                             {{/* {{if .Center.StaffList}} */}}
+                            <a href="/add-to-drive?location={{$number}}&date={{$drives.DriveType.Date}} {{$drives.DriveType.StartTime}}" class="details-link">Staff Data</a>
+                            {{/* {{end}} */}}
+                </div>
+
+        </div>
+
+        {{end}}
+<style>
+
+::-webkit-scrollbar-thumb{
+    background:var(--DHAR) !important;
+}
+</style>
+            
+
+    {{end}}
+
+
+
+
+
+
+{{end}}
+
+
+
+
+
+
+
+    {{/* <div id="total-blood">
+                                <a href="/data-entry?locations={{$number}}&Drive={{$drives.DriveType.Date}} {{$drives.DriveType.StartTime}}" style="width:100%;tex-decoration:none;" class="tdy-link">Collection Data</a>
+                                
+                                    <div id="wb-count">
+                                    <h5>Whole Blood</h5>
+                                    <p>{{$drives.DriveType.WholeBloodCount.Total}}</p>
+                                    </div>
+                                    <div id="ffp">
+                                    <h5>FFP/PF24</h5>
+                                    <p>{{$drives.DriveType.NumOfFFPPF24}}</p>
+                                    </div>
+                                    <div id="o-pos-thru-a-neg">
+                                        <div id="o-pos">
+                                            <label>O Pos</label> 
+                                            <p>{{$drives.DriveType.WholeBloodCount.OPositive}}</p>
+                                        </div>
+                                        <div id="o-neg">
+                                            <label>O Neg</label> 
+                                            <p>{{$drives.DriveType.WholeBloodCount.ONegative}}</p>
+                                        </div>
+                                        <div id="a-pos">
+                                            <label>A Pos</label> 
+                                            <p>{{$drives.DriveType.WholeBloodCount.APositive}}</p>
+                                        </div>
+                                        <div id="a-neg">
+                                            <label>A Neg</label> 
+                                            <p>{{$drives.DriveType.WholeBloodCount.ANegative}}</p>
+                                        </div>
+                                    </div>
+                                    <div id="b-pos-thru-ab-neg">
+                                    <div id="b-pos">
+                                            <label>B Pos</label> 
+                                            <p>{{$drives.DriveType.WholeBloodCount.BPositive}}</p>
+                                        </div>
+                                        <div id="b-neg">
+                                            <label>B Neg</label> 
+                                            <p>{{$drives.DriveType.WholeBloodCount.BNegative}}</p>
+                                        </div>
+                                        <div id="ab-pos">
+                                            <label>AB Pos</label> 
+                                            <p>{{$drives.DriveType.WholeBloodCount.ABPositive}}</p>
+                                        </div>
+                                        <div id="ab-neg">
+                                            <label>AB Neg</label> 
+                                            <p>{{$drives.DriveType.WholeBloodCount.ABNegative}}</p>
+                                        </div>
+                                    
+                                    </div>
+                                </div> */}}

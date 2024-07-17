@@ -1,0 +1,66 @@
+{{define "staff-hours"}}
+
+{{/* this page requires the Donor Center */}}
+
+<style>
+      ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        background: var(--DHAR) !important;
+      }
+    </style>
+
+
+{{/* REQUIRES Center and DRIVEDATE PARAMETERS */}}
+{{$centerNumber:=.Center.Num}}
+<h4>If there is no data, please go back and add staff to drive.</h4>
+<a href="staff-portal?locations={{$centerNumber}}" class="portal-link">return to portal</a>
+    {{range .Center.BloodDrives}}
+    {{$drive:=.}}
+{{/* for each drive, show the staff */}}
+<div class="drive-container">
+
+
+{{/* <fieldset> */}}
+<legend>{{$drive.DriveType.Date }} {{$drive.DriveType.StartTime}}</legend>
+<div class="drive-date" id ="{{$drive.DriveType.Date}} {{$drive.DriveType.StartTime}}">
+{{range $_,$v:= $drive.Staff}}
+        <i class="fa fa-person"></i>
+
+        <div class="person" id="{{$v.Name}}">
+        <label>{{$v.Name}}</label>
+        {{ $combine := (printf "%v %v" $drive.DriveType.Date $drive.DriveType.StartTime) }}
+        <span style="color:crimson;">{{$combine}}</span>
+        {{if $v.DoIBelong $combine}}
+       
+        {{$driveHours:= index $v.DriveHours $combine}}
+       
+        <form action="staff-hours" method="post">
+        <input type="text" hidden value="{{$centerNumber}}" name="center-num">
+        <input type="text" hidden value='{{$drive.DriveType.Date}} {{$drive.DriveType.StartTime}}' name="date"> 
+        <div class="drive-hours">
+                    <label>collecting</label><input type="number" name="collection-hrs" step="0.5" required placeholder="{{$driveHours.HrsCollecting}}" >
+                    <label>supporting</label><input type="number" name="supporting-hrs" step="0.5" required placeholder="{{$driveHours.HrsSupporting}}" >
+                    <label>processing</label><input type="number" name="processing-hrs" step="0.5" required placeholder="{{$driveHours.HrsProcessing}}" >
+                    </div>
+                    <input hidden type="text" name="staff" value="{{$v.Name}}">
+                    <button type="submit" style="width: 100%;
+    margin: auto;
+    max-width: 100%;">enter</button>
+</form>
+        {{end}}
+            
+    </div>
+
+{{end}}
+      </div>
+      <a href="staff-portal?locations={{$centerNumber}}" class="portal-link">return to portal</a>
+{{/* </fieldset> */}}
+
+
+</div>
+
+    {{end}}
+{{end}}
+
+{{/* {{template "staff-hours" .}} */}}

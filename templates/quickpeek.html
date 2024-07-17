@@ -1,0 +1,196 @@
+{{ define "quick-peek" }}
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+          to right,
+          #211529,
+          #98989c
+        ); /* Background color of the scrollbar handle */
+        border-radius: 10px; /* Radius of the scrollbar handle */
+      }
+      ::-webkit-scrollbar {
+        width: 1px; /* Width of the entire scrollbar is hidden*/
+      }
+
+      .eye-icon {
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .report {
+        border: 1px solid #000;
+        padding: 10px;
+        margin: 10px;
+        font-family: Arial, sans-serif;
+        max-width: 250px;
+        max-height: 250px;
+        overflow-y: scroll;
+        font-size: small;
+        font-family: "Courier New", Courier, monospace;
+        background-color: #847e9440;
+        color: #000;
+        line-height: 1.5;
+        overflow-wrap: break-word;
+        border-radius: 7px;
+        /* add rule for making the scrollbar very thin */
+
+        /* make the scrollbar look like a pill */
+        /* scrollbar-width: thin;
+                scrollbar-color: lightcoral; */
+        overflow-y: auto;
+        display: none;
+      }
+
+      .eye-icon:hover + .report {
+        display: block;
+      }
+
+      .report-date {
+        text-align: right;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        border-bottom: 0.5px solid lightcoral;
+      }
+
+      .report-data {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        width: 99%;
+      }
+
+      .report-data-label {
+        font-weight: bold;
+        font-size: 12.3px;
+        font-family: math;
+      }
+
+      .report-data-value {
+        font-weight: 550;
+        color: rgb(26, 122, 74);
+        font-size: small;
+      }
+
+      .drive-score {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        align-self: center;
+      }
+
+      .drive-score.red {
+        background-color: red;
+      }
+
+      .drive-score.yellow {
+        background-color: yellow;
+      }
+
+      .drive-score.green {
+        background-color: green;
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 1250px;
+        margin: auto;
+      }
+
+      .report {
+        flex: 1 1 auto;
+        background: aliceblue;
+      }
+      .report-scroll {
+        overflow-y: auto;
+        max-height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- . is a slice []BloodDrive -->
+
+    <div class="report custom-scrollbar" id="drive-report">
+      <h2 class="report-date" for="drive-report">{{.DateTime}}</h2>
+      <div class="report-scroll">
+        <div class="report-data">
+          <span class="report-data-label">Total Donors:</span>
+          <span class="report-data-value">{{.TotalDonors}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Total Units:</span>
+          <span class="report-data-value">{{.TotalUnits}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Total Expenses:</span>
+          <span class="report-data-value">${{.TotalExpenses}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Total Wages:</span>
+          <span class="report-data-value">${{.TotalWages}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Total Supplies:</span>
+          <span class="report-data-value">${{.TotalSupplies}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Total Travel:</span>
+          <span class="report-data-value">${{.TotalTravel}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Total Cost:</span>
+          <span class="report-data-value">${{.TotalCost}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Cost If Purchased RBC:</span>
+          <span class="report-data-value">${{.CostIfPurchasedRBC}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Cost If Purchased FFP:</span>
+          <span class="report-data-value">${{.CostIfPurchasedFFP}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Total Cost Avoidance:</span>
+          <span class="report-data-value">${{.TotalCostAvoidance}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Units Processed Per Hr:</span>
+          <span class="report-data-value">{{.TotalUnitsPerHr}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Units Collected Per Person:</span>
+          <span class="report-data-value">{{.TotalUnitsPerPerson}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Cost To Produce:</span>
+          <span class="report-data-value">${{.TotalCostPerUnit}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">
+            Average Wages per Hour(process):
+          </span>
+          <span class="report-data-value">${{.APH}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label"
+            >Average Wages per Hour(collect):</span
+          >
+          <span class="report-data-value">${{.ACH}}</span>
+        </div>
+        <div class="report-data">
+          <span class="report-data-label">Drive Score:</span>
+          <span
+            class="report-data-value drive-score {{.DriveScore.Color}}"
+          ></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+{{ end }}

@@ -1,0 +1,18 @@
+{{define "comments-view"}}
+
+    {{if .}} 
+    <div class="comments-view" id="comments-view">
+    <label for="comments-view">Comments</label>
+        {{range $k , $comment := .Drive.DriveType.Comments}}
+            
+           <li><p>{{$comment.Notes}}</p><span class="sub-text"><br/>{{$comment.Signature}}<br/>{{$comment.Date}}</span></li>
+        
+        
+        
+        
+        {{end}}</div>
+
+    {{end}}
+
+
+{{end}}

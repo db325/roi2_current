@@ -1,0 +1,51 @@
+{{define "staff-donor-center-view"}}
+
+
+{{if .Center}}
+
+ 
+
+<div id="donor-center" style="text-align:center;" >
+    <h3>{{.Center.Name}}</h3>
+    <p> {{.Center.Addr.Street}} <br>{{.Center.Addr.CityState}},{{.Center.Addr.Zip}} </p>
+    <p>Phone: {{.Center.Phone}}</p>
+    <p>DonationTypes: {{.Center.DonationTypes}}</p>
+    <div class="staff-view">
+        <h3> Staff List</h3>
+        {{template "staff-list-view" .}} 
+    </div>
+
+<div>
+   
+
+    {{/* {{if and .Center.StaffList .Center.BloodDrives}}
+        <a href="add-to-drive?location={{.Center.Num}}" class="portal-link">Add staff to Drive</a>
+        <a href="staff-hours?center-num={{.Center.Num}}" class="portal-link">Enter staff hours</a>
+    {{else}}
+    <span class="button " style="color:crimson;">Missing required data</span>
+    {{end}} */}}
+     
+    </div>
+
+            <div class="center-container" >
+                {{if .Center.BloodDrives}}
+                <h3 class="center-heading" style="width:100%">Blood Drives</h3>
+                {{template "compact-view-staff" .}}
+                {{else}}
+                <h3 class="centerheading"style="width:100%">No Drives AtThe Moment</h3>
+                {{end}}
+            
+            </div>
+    </div>
+
+
+
+</div>   {{/*end donor-center div */}}
+
+
+
+
+{{end}}
+
+
+{{end}}

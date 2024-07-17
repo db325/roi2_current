@@ -1,0 +1,164 @@
+{{define "display-card"}}
+    {{if .Center.BloodDrives}}
+        {{$location := .Center.Num}}
+        {{range $_, $drives := .Center.BloodDrives}}
+            {{$str := $drives.GetPercentage}}
+          
+            <div class="display-card" data-color="{{$str.Color}}" data-category="{{$drives.DriveType.Kind}}" data-date="{{$drives.DriveType.Date}}">
+                <div id="labels-div">
+                    <div>
+                        <img src="./svg/blood-bank.svg">
+                        <label for="date-time-tdy" class="data-card-label-text">{{$drives.DriveType.Kind}}</label>
+                    </div>
+                    <div>
+                        <img src="./svg/building.svg">
+                        <label style="font-size:x-small;">{{$drives.DriveType.Location}}</label>
+                    </div>
+                    {{/* test div remember to remove */}}
+                    <div>
+                        <span class="eye-icon">
+                        <i class="fas fa-eye" style="font-size:12px;"></i>
+                        {{template "quick-peek" $drives.GenerateReport}}
+                        </span>
+                        
+                    </div>
+
+                </div>
+                <div id="date-time-tdy" class="date-time-tdy" style="display:flex;flex-direction:row;">
+                    <div style="width:50%;display:flex;flex-direction:column;">
+                        <div>
+                            <img src="./svg/calendar.svg">
+                            <label class="data-card-label-text">{{$drives.DriveType.Date}}</label>
+                        </div>
+                        <div>
+                            <img src="./svg/clock-two.svg">
+                            <label class="data-card-label-text">{{$drives.DriveType.StartTime}}</label>
+                        </div>
+                    </div>
+                    <div id="is-mobile-tdy" style="width:50%;text-align:center;display:flex;justify-content:center;align-items:center;">
+                        {{if eq $drives.DriveType.Kind "TDY"}}
+                            <a href="/cost-data?location={{$location}}&Drive={{$drives.DriveType.Date}} {{$drives.DriveType.StartTime}}" class="tdy-link" data-changed="{{$drives.Cost.BeenChanged}}" onclick="markAsClicked(event)">Enter TDY Data</a>
+                        {{end}}
+                    </div>
+                </div>
+                <div class="labels_results" style="display:flex;flex-direction:column;">
+                    <div id="labels" class="data-card-label">
+                        <span>
+                            <img src="./svg/money-savings.svg" class="icon" title="production cost per wholeblood uniit">
+                            <h5 class="data-card-label-text">Cost Production<span class="info"></span></h5>
+                        </span>
+                        <span>
+                            <img src="./svg/donation.svg" class="icon">
+                            <h5 class="data-card-label-text">Collections Per Hour</h5>
+                        </span>
+                        <span>
+                            <img src="./svg/cogs.svg" class="icon" title="whole blood units produced per hour">
+                            <h5 class="data-card-label-text">Production Per Hour<span class="info"></span></h5>
+                        </span>
+                        <span>
+                            <img src="./svg/avoidance.svg" class="icon" title="amount saved by collecting and processing the blood, rather than purchasing from a civilian source">
+                            <h5 class="data-card-label-text">Cost Avoidance<span class="info"></span></h5>
+                        </span>
+                        {{if eq $str.Color "green"}}
+                            <span>
+                                <img src="./svg/group-316-green.svg" class="icon">
+                                <p class="data-card-label-text">
+                                    <h5 class="data-card-label-text">Savings</h5>
+                                </p>
+                            </span>
+                        {{end}}
+                        {{if eq $str.Color "yellow"}}
+                            <span>
+                                <img src="./svg/yellow.svg" class="icon">
+                                <p class="data-card-label-text">
+                                    <h5 class="data-card-label-text">Savings</h5>
+                                </p>
+                            </span>
+                        {{end}}
+                        {{if eq $str.Color "red"}}
+                            <span>
+                                <img src="./svg/red.svg" class="icon">
+                                <p class="data-card-label-text">
+                                    <h5 class="data-card-label-text">Savings</h5>
+                                </p>
+                            </span>
+                        {{end}}
+                    </div>
+                    <div id="results">
+                        <span>
+                            <p class="data-card-label-text">${{printf "%.2f" $drives.GetCostPerUnit}}</p>
+                        </span>
+                        <span>
+                            <p class="data-card-label-text">{{printf "%.2f" $drives.GetUnitsCollectedPerHr}}</p>
+                        </span>
+                        <span>
+                            <p class="data-card-label-text">{{$drives.SetPH}}</p>
+                        </span>
+                        <span>
+                            <p class="data-card-label-text">${{$drives.ThousandsPrinter ($drives.GetCostAvoidance)}}</p>
+                        </span>
+                        <span>
+                            <p class="data-card-label-text">{{$drives.Float2String ($str.Number)}}&percnt;</p>
+                        </span>
+                    </div>
+                </div>
+                <div id="data-entry">
+                    {{$drivedate := .DriveType.Date}}
+                    {{$drivetime := .DriveType.StartTime}}
+                    <a href="full-view?center-num={{$location}}&date={{$drivedate}}&time={{$drivetime}}" class="details-link">Full Details</a>
+                    <a href="delete-redirect?drivedate={{$drivedate}} {{$drivetime}}&number={{$location}}" class="delete details-link">Delete Drive</a>
+                    {{/* <a href="add-note?center-number={{$location}}&drive-date={{$drivedate}} {{$drivetime}}" class="details-link">Comments</a> */}}
+                </div>
+            </div>
+        {{end}}
+    {{end}}{{/* end if */}}
+
+    <script>
+        function markAsClicked(event) {
+            // Add logic here to mark the link as clicked
+            console.log(event.target.classList);
+            if (event.target.classList.contains("pulsing-link")) {
+                console.log("matching class");
+                event.target.classList.remove('pulsing-link');
+            }
+        }
+//add a mouesover event to the eye icon. when the mouse enters the icon, the quick peek div should be displayed
+       
+
+          const eyeIcons= document.querySelectorAll('.eye-icon');
+          const reports= document.querySelectorAll('.report');
+        eyeIcons.forEach((icon, index) => {
+            let isReportVisible = false;
+
+            icon.addEventListener('mouseover', () => {
+                if (!isReportVisible) {
+                    const iconRect = icon.getBoundingClientRect();
+                    const iconCenterY = iconRect.top + iconRect.height / 2;
+                    const reportHeight = reports[index].offsetHeight;
+                    const reportTop = iconCenterY - reportHeight / 2;
+                    reports[index].style.display = 'block';
+                    reports[index].style.position = 'fixed';
+                    reports[index].style.top = `${reportTop}px`; // Position the report at the center of the icon vertically
+                    reports[index].style.right = '185px'; // Position the report 3 pixels from the right edge of the viewport
+                    reports[index].style.transform = 'translateY(-50%)'; // Adjust the vertical position to be centered relative to the icon
+                    reports[index].style.maxHeight = '80vh'; // Set a maximum height for the report and enable scrolling
+                    //reports[index].style.overflowY = 'auto'; // Enable vertical scrolling if the content exceeds the maximum height
+                }
+            });
+
+            icon.addEventListener('click', () => {
+                isReportVisible = !isReportVisible;
+            });
+
+            icon.addEventListener('mouseout', () => {
+                if (!isReportVisible) {
+                    reports[index].style.display = 'none';
+                }
+            });
+        });
+       
+           
+       
+       
+    </script>
+{{end}}

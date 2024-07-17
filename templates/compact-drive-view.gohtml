@@ -1,0 +1,73 @@
+{{define "compact-view"}}
+
+
+
+    {{if .Center.BloodDrives}}
+{{$location:=.Center.Num}}
+        {{range $_, $drives := .Center.BloodDrives}}
+        
+            <div class="compact-view">
+            <div class="top-level">
+
+            <div id="date-time-loc">
+                <label>{{$drives.DriveType.Date}}</label>
+                <label>{{$drives.DriveType.StartTime}}</label>
+                <p>{{$drives.DriveType.Location}}</p>
+                <p>{{$drives.DriveType.Kind}}</p>
+                {{if eq $drives.DriveType.Kind "Mobile/TDY"}}  <a href="/cost-data?location={{$location}}&Drive={{$drives.DriveType.Date}} {{$drives.DriveType.StartTime}}" class="tdy-link">enter tdy data</a>{{end}}
+              
+            </div>
+
+{{$str:=($drives.GetPercentage)}}
+
+            <div id="percentages" style="box-shadow: 0 0.5rem 2rem 0 {{$str.Color}}">
+            <label>Savings of</label>
+        <p>{{$drives.Float2String ($str.Number)}}&percnt;</p>
+            
+            </div>
+
+            <div></div>
+          
+            </div>
+            <div class="bottom-level">
+                <div id="cost-production" >
+                <h5>Cost Producton<span class="info" title="overall cost per wholeblood uniit"></span></h5>
+                <p>${{printf "%.2f" $drives.GetCostPerUnit}}</p>
+                </div>
+                <div id="collections-per-hour">
+                <h5>Collections per Hour</h5>
+                <p>{{printf "%.2f" $drives.GetUnitsCollectedPerHr}}</p>
+                </div>
+                <div id="units-per-hour">
+                <h5>Units per Hour<span class="info" title="whole blood units produced per hour"></span></h5>
+                <p >{{$drives.SetPH}}</p>
+                </div>
+                <div>
+                <h5>Cost Avoidance<span class="info" title="how much you saved or didn't save"></span></h5>
+                <p>${{$drives.ThousandsPrinter ($drives.GetCostAvoidance)}}</p>
+                </div>
+                {{$drivedate:=.DriveType.Date}}
+                {{$drivetime:=.DriveType.StartTime}}
+                
+            <a href="full-view?center-num={{$location}}&date={{$drivedate}}&time={{$drivetime}}" class="details-link">Full Details</a>
+              {{/* <a href="deletedrive?number={{$location}}&drivedate={{$drivedate}} {{$drivetime}}" class="details-link">Delete Drive</a> */}}
+              <a href="delete-redirect?drivedate={{$drivedate}} {{$drivetime}}&number={{$location}}" class="details-link">Delete Drive</a>
+              <a href="add-note?center-number={{$location}}&drive-date={{$drivedate}} {{$drivetime}}" class="details-link">Comments</a>
+            </div>
+
+            </div>
+            
+
+
+        {{end}}
+<script>   
+   
+
+
+</script>
+    {{end}}
+
+
+
+
+{{end}}

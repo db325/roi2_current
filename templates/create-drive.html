@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <title>{{.Title}}</title>
+  </head>
+  <body>
+    <div class="sub-page">
+      {{template "sub-page-nav" .}}
+      <div class="main-content">
+        <!-- <div class="center-info">
+          <h3>{{.Center.Name}}</h3>
+
+          <p>Phone: {{.Center.Phone}}</p>
+        </div> -->
+        {{/* end center info div */}}
+        <span class="page-data"
+          ><h2>{{.IntroText}}</h2>
+          <p>
+            In order to create a blood drive, please enter all required fields
+            below and click enter.
+          </p></span
+        >
+        <form
+          action="/create-drive"
+          class="data-entry creation-panel"
+          method="post"
+        >
+          <div class="form-input">
+            <p for="name">What type of blood drive are you creating?</p>
+            <select name="kind" id="kind">
+              <option value="In-House">In House</option>
+              <option value="Mobile">Mobile</option>
+              <option value="TDY">TDY</option>
+            </select>
+          </div>
+          <div class="form-input">
+            <p for="when">Select Blood Drive Start Date</p>
+            <input type="datetime-local" name="when" id="when" required />
+          </div>
+          <!-- <input
+          type="date"
+          id="when"
+          name="when"
+          placeholder="01/22/1999"
+          required
+        /> -->
+
+          <input type="number" hidden value="{{.Index}}" name="location" />
+          <button type="submit" style="margin-top: 30px !important">
+            submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script src="./js/js-time.js"></script>
+  <script src="./js/timeout-checker.js"></script>
+</html>

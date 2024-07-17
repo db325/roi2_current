@@ -1,0 +1,88 @@
+{{define "staff-side-panel"}}
+
+<style>
+.side-panel-selections > a {
+  text-align: center;
+margin:auto !important;
+width:100% !important;
+padding-left:0 !important;
+justify-content: center;
+}
+
+.side-panel-selections>div{
+display: flex;
+align-items: center;
+
+padding-left: 10%;
+overflow: hidden;
+width: 50%;
+margin: auto;
+color: white;
+font-family: Ubuntu;
+text-align: center;
+font-size: 20px;
+margin-bottom: 15px;
+
+}
+
+legend {
+  color: white;
+  font-family: Ubuntu;
+  text-align: center;
+  font-size: 20px;
+  border:1px solid white;
+}
+
+
+.legend-div{
+  margin-bottom: 15px;
+  font-size:12px;
+}
+
+.side-panel>div{
+  margin-bottom:0 !important;
+}
+
+.side-panel-selections>a:hover{
+  background-color: #c95b6f !important;
+  color: white !important;
+  border-radius: 5px;
+ 
+  text-decoration: none;
+}
+
+</style>
+
+  <div class="side-panel sb">
+   <div class="side-panel-selections">
+             <div>  Drives: {{len .Center.BloodDrives}} </div>
+               {{/* <div><img src="./png/settings.png" class="panel-icon"> <a href="index?location={{.Center.Num}}" class="side-panel-selection-text">Configure Defaults</a></div> */}}
+
+             {{if and .Center.StaffList .Center.BloodDrives}}
+                   
+                {{else}}
+                <span class="button " style="color:crimson;margin:auto;">Missing Staff or Drive Data</span>
+                {{end}} 
+           
+  </div>
+               
+                {{template "legend"}}
+               
+                  <img src="./png/logo2014.png">   
+              <div class="side-panel-selections">
+              <a href="/logout">Log Out</a>
+              </div>
+    </div>
+
+
+ 
+
+
+
+
+
+ 
+
+
+
+{{end}}

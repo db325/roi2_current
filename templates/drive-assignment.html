@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <title>{{.Title}}</title>
+  </head>
+  <body>
+    <style>
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 7px;
+      }
+      ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        background: var(--DHAR);
+      }
+      #donor {
+        display: none;
+      }
+      .donor-data-top > div {
+        margin: 0;
+      }
+      .donor-total {
+        color: var(--DHAR);
+      }
+
+      .donor-data-top {
+        /* width: 30%;
+        display: flex;
+        flex-direction: row;
+        margin-left: 0;
+        margin-right: 0; */
+        display: none;
+      }
+
+      .donor-data-bottom {
+        margin: auto;
+        display: flex;
+        width: 900px;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      #results > span {
+        flex-direction: column !important;
+      }
+      .donor-data-bottom > div {
+        width: 50%;
+        margin: auto;
+        min-width: 230px;
+      }
+      /* .donor-data-bottom > div, */
+      .other-display-card {
+        margin: 0;
+      }
+      div#comments {
+        width: 100% !important;
+      }
+      div.comments-view {
+        margin-top: 25px;
+      }
+      div.comments-view > label {
+        margin: auto;
+      }
+      input[type="submit"],
+      button[type="submit"]:hover {
+        background-color: var(--DHAR) !important;
+        font-family: Ubuntu;
+        font-size: 20px;
+        color: white !important;
+      }
+
+      button,
+      input[type="submit"] {
+        width: 50%;
+        color: var(--DHAR) !important; /*text color */
+        text-align: center;
+        font-family: Ubuntu;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        /* margin: 7.5px; */
+        border-radius: 7px;
+        background-color: var(--BACK) !important; /*background color */
+      }
+    </style>
+
+    <div class="sub-page">
+      {{template "staff-nav-bar" .}}
+      <div class="main-content">
+        <span class="page-data">
+          <h2>{{.IntroText}}</h2>
+          <!-- {{template "select-drive-staff" .}} -->
+          <p>
+            Add Staff to Drive, then you can enter the hours worked on the
+            right.
+          </p>
+        </span>
+
+        <!-- <div class="drives-container" style="align-items: center">
+        </div> -->
+
+        <div
+          class="staff-container"
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            height: 375px;
+            max-height: 650px;
+          "
+        >
+          {{template "add-to-drive" .}} {{template "enter-staff-hours" .}}
+        </div>
+
+        {{template "donor-data" .Drive}} {{template "comments" .}} {{template
+        "comments-view" .}}
+      </div>
+    </div>
+  </body>
+  <script src="./js/js-time.js"></script>
+  <script src="./js/timeout-checker.js"></script>
+</html>

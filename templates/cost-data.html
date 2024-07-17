@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <title>{{.Title}}</title>
+  </head>
+  <style>
+     .form-input>input::placeholder{
+        color: var(--DHAB);
+        font-weight: 900;
+        text-align: center;
+      }
+  </style>
+  <body>
+    {{if ne .DriveDate ""}} {{$loc:=.Center.Num}} {{$drive:=.Drive}}
+
+    <div class="sub-page">
+      <div class="nav-bar sub-nav">{{template "sub-page-nav" .}}</div>
+      <div class="center-info">
+        <h3>{{.Center.Name}}</h3>
+
+        <p>Phone: {{.Center.Phone}}</p>
+      </div>
+      <div class="main-content">
+        <span class="page-data">
+          <p>
+            Please enter {{$drive.DriveType.Kind}} cost data associated with the
+            selected drive.
+          </p></span
+        >
+        <form
+          action="/cost-data"
+          method="post"
+          class="data-entry tdy-drive-expenses creation-panel"
+          id="cost-data-form"
+        >
+          <br />
+          <input type="text" name="date" value="{{.DriveDate}}" hidden />
+          <input type="number" name="location" value="{{$loc}}" hidden />
+
+          <!-- <h2 style="color: crimson; margin: auto">{{.DriveDate}}</h2> -->
+          <label for="cost-data-form" class="form-label">{{.DriveDate}}</label>
+          <div class="form-input">
+            <p
+              aria-label-for="shipping"
+              class="tooltip-container"
+              onclick="toggleExplanation('explanation-shipping')"
+            >
+              <i class="fa fa-info-circle"></i></i>Shipping
+            </p>
+            <div class="definition" id="explanation-shipping">
+              Total cost to ship whole blood to the BDC, if by courier; often
+              used for multi-day blood drives.
+            </div>
+            <input
+              class="spacing"
+              type="number"
+              step="0.01"
+              name="shipping"
+              id="shipping"
+              required
+              placeholder="current value ${{$drive.Cost.TDY.Shipping}}"
+            />
+          </div>
+
+          <div class="form-input">
+            <p aria-label-for="flights" class="tooltip-container" onclick="toggleExplanation('explanation-flight-costs')"><i class="fa fa-info-circle"></i>Flight Costs</p>
+            <!-- <span id="little-text"
+              >currrent value ${{$drive.Cost.TDY.FlightCosts}}</span
+            > -->
+            <div class="definition" id="explanation-flight-costs">
+              Total cost of all airline tickets, if applicable, for all drive staff, including advance teams. 
+            </div>
+            <input
+              class="spacing"
+              type="number"
+              step="0.01"
+              name="flights"
+              id="flights"
+              required
+              placeholder="currrent value ${{$drive.Cost.TDY.FlightCosts}}"
+            />
+          </div>
+
+          <div class="form-input">
+            <p aria-label-for="airport-parking" class="tooltip-container" onclick="toggleExplanation('explanation-airport-parking')"><i class="fa fa-info-circle"></i>Airport Parking</p>
+            <!-- <span id="little-text"
+              >currrent value ${{$drive.Cost.TDY.AirportParking}}</span
+            > -->
+            <div class="definition" id="explanation-airport-parking">
+              Total airport parking cost, if applicable, for all drive staff, including advance teams.
+            </div>
+            <input
+              type="number"
+              step="0.01"
+              name="airport-parking"
+              id="airport-parking"
+              required
+              placeholder="currrent value ${{$drive.Cost.TDY.AirportParking}}"
+            />
+          </div>
+
+          <div class="form-input">
+            <p aria-label-for="m-and-e-perdiem" class="tooltip-container" onclick="toggleExplanation('explanation-per-deim')"><i class="fa fa-info-circle"></i>M & E Per Diem</p>
+            <!-- <span id="little-text"
+              >currrent value ${{$drive.Cost.TDY.MEPerDiem}}</span
+            > -->
+            <div class="definition" id="explanation-per-deim">
+              Total cost of the meals and expenses (M&E) per diem, accounting for the adjustment for the first and last day of travel, for all drive staff, including advance teams
+            </div>
+            <input
+              class="spacing"
+              type="number"
+              step="0.01"
+              name="m-and-e-perdiem"
+              id="m-and-e-perdiem"
+              required
+              placeholder="currrent value ${{$drive.Cost.TDY.MEPerDiem}}"
+            />
+          </div>
+
+          <div class="form-input">
+            <p aria-label-for="hotel-parking" class="tooltip-container" onclick="toggleExplanation('explanation-hotel-parking')"><i class="fa fa-info-circle"></i>Hotel Parking</p>
+            <!-- <span id="little-text"
+              >currrent value ${{$drive.Cost.TDY.HotelParking}}</span
+            > -->
+            <div class="definition" id="explanation-hotel-parking">
+              Total cost of hotel parking, if applicable, for all drive staff, including advance teams.
+            </div>
+            <input
+              class="spacing"
+              type="number"
+              step="0.01"
+              name="hotel-parking"
+              id="hotel-parking"
+              required
+              placeholder="currrent value ${{$drive.Cost.TDY.HotelParking}}"
+            />
+          </div>
+
+          <div class="form-input">
+            <p aria-label-for="lodging" class="tooltip-container" onclick="toggleExplanation('explanation-lodging')"><i class="fa fa-info-circle"></i>Lodging</p>
+            <!-- <span id="little-text"
+              >currrent value ${{$drive.Cost.TDY.Lodging}}</span
+            > -->
+            <div class="definition" id="explanation-lodging">
+              Total hotel cost for all personnel, for all nights stayed, for all drive staff, including advance teams.  Derive this from the actual hotel receipts for lodging rates, taxes, etc. (Not the lodging per diem.) Do not include snacks or meals that may have been billed to the room.
+            </div>
+            <input
+              class="spacing"
+              type="number"
+              step="0.01"
+              name="lodging"
+              id="lodging"
+              required
+              placeholder="currrent value ${{$drive.Cost.TDY.Lodging}}"
+            />
+          </div>
+
+          <div class="form-input">
+            <label for="signature">Signature</label>
+            <input
+              class="spacing"
+              type="text"
+              name="signature"
+              id="signature"
+              required
+              placeholder="current value {{$drive.Cost.EnteredBy}}" 
+            />
+          </div>
+          <div class="button-div">
+            <button type="submit" id="butt">submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {{end}}
+  </body>
+  <script>
+    function toggleExplanation(explanationId) {
+      var explanation = document.getElementById(explanationId);
+      if (explanation.style.display === "none") {
+        explanation.style.display = "block";
+      } else {
+        explanation.style.display = "none";
+      }
+    }
+  </script>
+
+<script src="./js/js-time.js"></script>
+<script src="./js/timeout-checker.js"></script>
+</html>

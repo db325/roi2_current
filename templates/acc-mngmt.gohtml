@@ -1,0 +1,69 @@
+{{/* Account Management View */}}
+
+{{define "account-management"}}
+<style>
+    .account {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+        width: 300px;
+    }
+</style>
+
+
+<script>
+
+
+
+
+   function showCenterData(){
+    var accounts ={{.Json}} ;
+    console.log(accounts);
+   }
+showCenterData();
+
+var reports={{.Reports}}
+for(var i=0;i<reports.length;i++){
+    //put reports in local storage,after checking if the reports are not already in local storage
+    if(localStorage.getItem('reports')===null){
+        //get the centerName value from the current report
+        var centerName= JSON.parse(reports[i]).centerName;
+        console.log(centerName,"this is the center name",reports[i]);
+        localStorage.setItem(centerName,JSON.stringify(reports));
+    }
+
+    console.log(reports[i],reports[i].centerName);
+}
+
+console.log("just checking to see if this line is executed")
+
+</script>
+ 
+
+{{range $center,$users:= .Users}}
+    {{/* {{$center}} */}}
+    <div class="center">
+    <h4>{{(index $users 0).CenterName}}</h4>
+    {{range $_,$account:= $users}}
+   {{/* <h5> {{$account.CenterName}}</h5> */}}
+        <div class="account">
+            <p>Name: {{$account.Name}}</p>
+            <p>Email: {{$account.Email}}</p>
+            <p>Role: {{$account.Role}}</p>
+            {{/* <p>Password: {{$account.HashedPwd}}</p> */}}
+            <p>Decoded: {{$account.GetPassword}}</p>
+           <button onclick="window.location.href='/reset-pwd?name={{$account.Name}}'">Reset Password</button>
+           
+        </div>
+       
+    {{end}}
+    </div>
+  
+{{end}}
+
+{{end}}
+

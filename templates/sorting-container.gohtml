@@ -1,0 +1,29 @@
+
+
+{{define "sorting-container"}}
+
+<div class="filter-sort-container" style="display: flex; flex-direction: row;">
+   <div class="filter-options"style="display:flex; flex-direction:row;">
+ <select id="categoryDropdown" onchange="filterElements1()">
+    <!-- Options for categories -->
+    <option value="" selected  >--All Types--</option>
+    <option value="Mobile">Mobile</option>
+    <option value="TDY">TDY</option>
+    <option value="In-House">In-House</option>
+</select>
+
+<select id="colorDropdown" onchange="filterElements1()">
+    <!-- Options for colors -->
+    <option value="" selected  >--All Scores--</option>
+ <option value="green">Green<div class="color-block" style="background:green;"></div></option>
+ <option value="yellow">Yellow<div class="color-block" style="background:yellow;"></div></option>
+ <option value="red">Red<div class="color-block" style="background:red;"></div></option>
+</select>
+</div>
+   <div style="display:flex;align-items:baseline;margin-left:5px;">
+   <label for="sorting-icon"style="font-size:smaller;color:dimgrey;">Sort Order:</label>
+  <div id="sorting-icon" onclick="toggleSorting()">🔼</div>
+   </div>
+</div>
+
+{{end}}
